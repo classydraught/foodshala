@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Home from './HomeComponent';
 import Header from './HeaderComponent';
-
+import { Switch, Route, Redirect } from "react-router-dom";
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -10,8 +10,11 @@ class Main extends Component {
     }
     render() {
         return (<><Header />
-
-            <Home /></>);
+            <Switch>
+                <Route exact path="/home" component={Home} />
+                <Redirect to="/home" />
+            </Switch>
+        </>);
     }
 }
 
