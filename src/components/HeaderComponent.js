@@ -91,8 +91,8 @@ class Header extends Component {
                                    </NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink className="nav-link" to="/courses">
-                                            <span className="fa fa-list fa-lg"></span> Menu
+                                        <NavLink className="nav-link" to="/restaraunts">
+                                            <span class="fa fa-search fa-lg" aria-hidden="true"></span> Explore
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
@@ -102,7 +102,7 @@ class Header extends Component {
                                     </NavItem>
                                     <NavItem>
                                         <NavLink className="nav-link" to="/contactus">
-                                            <span className="fa fa-address-card fa-lg"></span> Contact
+                                            <span className="fa fa-address-book-o fa-lg"></span> Contact
                                       </NavLink>
                                     </NavItem>
                                 </Nav>

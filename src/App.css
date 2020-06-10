@@ -118,3 +118,23 @@ address {
 .profile-coursecard:hover {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
+
+.register-card {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+.my-card {
+  background: rgb(235, 137, 62);
+  background: linear-gradient(
+    184deg,
+    rgba(235, 137, 62, 1) 0%,
+    rgba(241, 92, 33, 1) 53%
+  );
+  color: #16161d;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  width: 100%;
+}
