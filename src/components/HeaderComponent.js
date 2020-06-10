@@ -137,8 +137,8 @@ class Header extends Component {
                         </div>
                     </div>
                 </Jumbotron>
-                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+                    <ModalHeader toggle={this.toggleModal} className="login-modal">Login</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.handleLogin}>
                             <FormGroup>
@@ -180,9 +180,17 @@ class Header extends Component {
                                 <span className="fa fa-sign-in fa-lg"></span>
                             </Button>
                             <FormGroup className="mt-2">
+                                <Link to="/reslogin" onClick={this.toggleModal}>
+                                    Restaraunt login!<span role="img" aria-label="">&nbsp;🥘</span>
+                                </Link>
+                                <br />
                                 <Link to="/register" onClick={this.toggleModal}>
-                                    Not a member? Register here!
-                </Link>
+                                    Not a member? Register here!<span role="img" aria-label="">&nbsp;😋</span>
+                                </Link>
+                                <br />
+                                <Link to="/addrestaraunt" onClick={this.toggleModal} >
+                                    Add your Restaraunt and start serving online<span role="img" aria-label="">&nbsp;👨‍🍳</span>
+                                </Link>
                             </FormGroup>
                         </Form>
                     </ModalBody>

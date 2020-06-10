@@ -12,7 +12,7 @@ import {
 function About(props) {
 
     return (
-        <div className="container">
+        <div className="container mb-5">
             <div className="row">
                 <Breadcrumb>
                     <BreadcrumbItem>

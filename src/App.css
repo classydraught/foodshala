@@ -14,7 +14,7 @@
   background-color: #16161d;
   color: #eee;
   margin: 0px auto;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   padding: 20px 0px 20px 0px;
 }
 .jumbotron {
@@ -137,4 +137,21 @@ address {
   margin-bottom: 1rem;
   position: relative;
   width: 100%;
+}
+
+.login-card {
+  background-color: white;
+  color: #16161d;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  width: 100%;
+}
+
+.login-modal {
+  background: #363636;
+  color: #eee;
 }

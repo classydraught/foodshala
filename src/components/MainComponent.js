@@ -7,6 +7,8 @@ import Contact from "./ContactComponent";
 import RestarauntsList from "./RestarauntListComponent";
 import RestarauntDetail from "./Restarauntmenu";
 import RegisterUser from "./RegisterComponent";
+import AddRestaraunt from "./AddRestaraunt";
+import RestarauntLogin from "./RestarauntLogin";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -30,7 +32,9 @@ class Main extends Component {
                         <Route exact path="/contactus" component={Contact} />
                         <Route exact path="/restaraunts" component={RestarauntsList} />
                         <Route exact path="/restmenu" component={RestarauntDetail} />
+                        <Route exact path="/addrestaraunt" component={AddRestaraunt} />
                         <Route exact path="/register" component={RegisterUser} />
+                        <Route exact path="/reslogin" component={RestarauntLogin} />
                         <Redirect to="/home" />
                     </Switch>
                 </CSSTransition>

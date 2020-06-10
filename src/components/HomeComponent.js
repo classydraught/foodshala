@@ -104,7 +104,7 @@ function RenderCard(imgsrc) {
 function Home() {
 
 
-    return (<div className="container">
+    return (<div className="container mb-5">
         <div className="row">
             <div className="col-12">
                 <img src="assets/foodshala2.png" alt="foodshala2" style={{ width: "100%" }} />
