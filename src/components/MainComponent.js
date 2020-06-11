@@ -9,6 +9,11 @@ import RestarauntDetail from "./Restarauntmenu";
 import RegisterUser from "./RegisterComponent";
 import AddRestaraunt from "./AddRestaraunt";
 import RestarauntLogin from "./RestarauntLogin";
+import RestProfile from './RestarauntProfile';
+import UserProfile from './UserProfile';
+import Cart from "./ShoppingCart";
+import AddDish from './AddDishComponent';
+import Orders from './ResOrders';
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -35,6 +40,11 @@ class Main extends Component {
                         <Route exact path="/addrestaraunt" component={AddRestaraunt} />
                         <Route exact path="/register" component={RegisterUser} />
                         <Route exact path="/reslogin" component={RestarauntLogin} />
+                        <Route exact path="/restprofile" component={RestProfile} />
+                        <Route exact path="/userprofile" component={UserProfile} />
+                        <Route exact path="/adddish" component={AddDish} />
+                        <Route exact path="/cart" component={Cart} />
+                        <Route exact path="/resorders" component={Orders} />
                         <Redirect to="/home" />
                     </Switch>
                 </CSSTransition>

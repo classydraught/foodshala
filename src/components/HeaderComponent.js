@@ -129,7 +129,7 @@ class Header extends Component {
                                 <img alt="logo" src="assets/foodshalanobgfit.png" width="70%" />
                                 <h5 style={{ color: "#222021", fontFamily: "Montserrat" }} className="mt-md-3 mt-5">Order food from favourite restaurants near you.</h5>
                             </div>
-                            <div className="col-12 col-sm-6">
+                            <div className="col-12 col-sm-6 d-md-block d-none">
                                 <h1 className="mt-5" style={{ color: "#222021", textAlign: "center", textShadow: "2px 2px #ff0000", fontFamily: "Montserrat" }}>
                                     {this.state.headingtext}
                                 </h1>

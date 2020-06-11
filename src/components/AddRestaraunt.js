@@ -11,7 +11,7 @@ class AddRestaraunt extends Component {
     render() {
         return (<div className="container mb-5">
             <div className="row h-100 justify-content-center align-items-center mt-3">
-                <div className="col-md-4">
+                <div className="col-md-4 d-md-block d-none">
                     <img alt="register-img-1" src="assets/foodregister6.png" className="img-fluid" />
                 </div>
                 <div className="col-md-4 col-12">
@@ -100,7 +100,7 @@ class AddRestaraunt extends Component {
                     </div>
 
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 mt-5 mt-md-0 d-md-block d-none">
                     <img alt="register-img-2" src="assets/registerfood2.gif" className="img-fluid" />
                 </div>
 

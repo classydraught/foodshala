@@ -12,8 +12,8 @@ class RestarauntLogin extends Component {
         return (
             <div style={{ backgroundColor: "#f56c3a" }}>
                 <div className="container">
-                    <div className="row h-100 justify-content-center align-items-center">
-                        <div className="col-md-4">
+                    <div className="row h-100 justify-content-center align-items-center pt-5 pb-5">
+                        <div className="col-md-4 d-md-block d-none">
                             <img alt="register-img-1" src="assets/foodpizza.gif" className="img-fluid" />
                         </div>
                         <div className="col-md-4 col-12">
@@ -57,7 +57,7 @@ class RestarauntLogin extends Component {
                             </div>
 
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-4 d-md-block d-none">
                             <img alt="register-img-2" src="assets/foodpizza.gif" className="img-fluid" />
                         </div>
                     </div>

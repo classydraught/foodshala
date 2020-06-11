@@ -100,15 +100,18 @@ address {
   margin: -5px;
   /* !importanté */
   border-radius: inherit;
-  /* !importanté */
   background: -webkit-gradient(
     linear,
     left top,
     right top,
-    from(#ffe20b),
-    to(#c0ff02)
+    from(rgba(235, 137, 62, 1)),
+    to(rgba(241, 92, 33, 1))
   );
-  background: linear-gradient(to right, #ffe20b, #c0ff02);
+  background: linear-gradient(
+    184deg,
+    rgba(235, 137, 62, 1) 0%,
+    rgba(241, 92, 33, 1) 53%
+  );
 }
 
 .profile-coursecard {

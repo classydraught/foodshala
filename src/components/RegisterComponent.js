@@ -11,7 +11,7 @@ class RegisterUser extends Component {
     render() {
         return (<div className="container mb-5">
             <div className="row h-100 justify-content-center align-items-center mt-3">
-                <div className="col-md-4">
+                <div className="col-md-4 d-md-block d-none">
                     <img alt="register-img-1" src="assets/registerfood1.jpg" className="img-fluid" />
                 </div>
                 <div className="col-md-4 col-12">
@@ -91,7 +91,7 @@ class RegisterUser extends Component {
                     </div>
 
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 d-md-block d-none">
                     <img alt="register-img-2" src="assets/quickdelivery.png" className="img-fluid" />
                 </div>
 
