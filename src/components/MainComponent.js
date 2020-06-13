@@ -16,15 +16,44 @@ import AddDish from './AddDishComponent';
 import Orders from './ResOrders';
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
+import { loginUser, LogOutUser, alreadyLoggedin } from "../redux/ActionCreator";
+
+
+
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    };
+};
+
+const mapDispatchToProps = dispatch => ({
+    loginUser: (email, password) => {
+        dispatch(loginUser(email, password));
+    },
+    LogOutUser: () => {
+        dispatch(LogOutUser());
+    },
+    alreadyLoggedin: () => {
+        dispatch(alreadyLoggedin());
+    }
+
+})
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+
+    componentDidMount() {
+        if (localStorage.getItem("foodshalakey") && !this.props.user.LoggedIn) {
+            this.props.alreadyLoggedin();
         }
     }
+
     render() {
-        return (<><Header />
+
+        return (<><Header
+            loginUser={this.props.loginUser}
+            LogOutUser={this.props.LogOutUser}
+            user={this.props.user} />
             <TransitionGroup>
                 <CSSTransition
                     key={this.props.location.key}
@@ -54,4 +83,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(Main);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

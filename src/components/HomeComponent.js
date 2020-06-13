@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RenderCard(imgsrc) {
-    console.log(imgsrc);
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {

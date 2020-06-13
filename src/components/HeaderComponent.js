@@ -64,7 +64,6 @@ class Header extends Component {
     }
     componentDidMount() {
         var i = 1;
-
         setInterval(() => { this.changeLine(i); i = (i + 1) % 5; }, 1500);
     }
 
@@ -92,7 +91,7 @@ class Header extends Component {
                                     </NavItem>
                                     <NavItem>
                                         <NavLink className="nav-link" to="/restaraunts">
-                                            <span class="fa fa-search fa-lg" aria-hidden="true"></span> Explore
+                                            <span className="fa fa-search fa-lg" aria-hidden="true"></span> Explore
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
@@ -107,7 +106,7 @@ class Header extends Component {
                                     </NavItem>
                                 </Nav>
                                 <Nav className="ml-auto" navbar>
-                                    <NavItem >
+                                    {!this.props.user.LoggedIn ? <NavItem >
                                         <Button
                                             variant="outlined"
                                             style={{ color: "#fff" }}
@@ -116,7 +115,16 @@ class Header extends Component {
                                             <span className="fa fa-sign-in fa-lg"></span>{" "}
                                             &nbsp;&nbsp;Login
                                      </Button>
-                                    </NavItem>
+                                    </NavItem> : <NavItem >
+                                            <Button
+                                                variant="outlined"
+                                                style={{ color: "#fff" }}
+                                                onClick={this.props.LogOutUser}
+                                            >
+                                                <span className="fa fa-sign-in fa-lg"></span>{" "}
+                                            &nbsp;&nbsp;Logout
+                                     </Button>
+                                        </NavItem>}
                                 </Nav>
                             </Collapse>
                         </div>
