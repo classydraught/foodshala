@@ -48,7 +48,6 @@ export const loginUser = (email, password) => dispatch => {
             );
         })
         .catch(error => {
-            console.log(error);
             alert("Wrong Credentials/ Kindly check email or password");
         });
 };
@@ -138,7 +137,6 @@ export const resLogin = (email, password) => dispatch => {
         email: email,
         password: password
     };
-    console.log(loginUser);
     return fetch(baseUrl + "restaraunt/login", {
         method: "POST",
         body: JSON.stringify(loginUser),
@@ -184,7 +182,6 @@ export const resLogin = (email, password) => dispatch => {
             window.location = "/resprofile";
         })
         .catch(error => {
-            console.log(error);
             alert("Wrong Credentials/ Kindly check email or password");
         });
 };
@@ -255,5 +252,86 @@ export const resLoggedin = (email, resname, ownername, id, image, resorders, acc
         address: address
     }
 })
+
+export const fetchRestraunts = () => dispatch => {
+    dispatch(RestarauntsLoading(true));
+
+    return fetch(baseUrl + "restaraunt/getallres")
+        .then(
+            response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error(
+                        "Error " + response.status + ": " + response.statusText
+                    );
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errormsg = new Error(error.message);
+                throw errormsg;
+            }
+        )
+        .then(response => response.json())
+        .then(restaraunts => dispatch(addRestaraunts(restaraunts.restaraunt)))
+        .catch(error => dispatch(RestFailed(error.message)));
+};
+export const addRestaraunts = restaraunts => ({
+    type: actionTypes.ADD_RESTARAUNTS,
+    payload: restaraunts
+});
+
+export const RestarauntsLoading = () => ({
+    type: actionTypes.RESTARAUNTS_LOADING
+});
+
+export const RestFailed = errormsg => ({
+    type: actionTypes.RESTARAUNTS_FAILED,
+    payload: errormsg
+});
+
+
+export const fetchDishes = () => dispatch => {
+    dispatch(DishesLoading(true));
+
+    return fetch(baseUrl + "dishes/getall")
+        .then(
+            response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error(
+                        "Error " + response.status + ": " + response.statusText
+                    );
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errormsg = new Error(error.message);
+                throw errormsg;
+            }
+        )
+        .then(response => response.json())
+        .then(dishes => dispatch(addDishes(dishes)))
+        .catch(error => dispatch(DishesFailed(error.message)));
+};
+export const addDishes = dishes => ({
+    type: actionTypes.ADD_DISHES,
+    payload: dishes
+});
+
+export const DishesLoading = () => ({
+    type: actionTypes.DISHES_LOADING
+});
+
+export const DishesFailed = errormsg => ({
+    type: actionTypes.DISHES_FAILED,
+    payload: errormsg
+});
+
+
 
 

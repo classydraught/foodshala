@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { lime, grey } from "@material-ui/core/colors";
 import { FadeTransform } from "react-animation-components";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
 const useStyles = makeStyles(theme => ({
     root: {
         maxWidth: 345
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
 function RenderRestaraunt({ rest }) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -52,12 +54,12 @@ function RenderRestaraunt({ rest }) {
                         <Avatar
                             aria-label="recipe"
                             className={classes.avatar}
-                            src={rest.image}
+                            src={baseUrl + rest.image}
                         ></Avatar>
                     }
-                    title={rest.name}
+                    title={rest.resname}
                 />
-                <CardMedia className={classes.media} image={rest.image} />
+                <CardMedia className={classes.media} image={baseUrl + rest.image} />
             </Link>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
@@ -86,19 +88,10 @@ function RenderRestaraunt({ rest }) {
     );
 }
 
-const restrauntlist = [
-    { _id: "1", name: "Hotel 1", image: "assets/rest1.jpg" },
-    { _id: "2", name: "Hotel 2", image: "assets/rest2.jpg" },
-    { _id: "3", name: "Hotel 3", image: "assets/rest3.jpg" },
-    { _id: "4", name: "Hotel 4", image: "assets/rest4.jpg" }
 
-];
+const RestarauntsList = (props) => {
 
-const RestarauntsList = () => {
-
-    restrauntlist.map(restaraunt => console.log(restaraunt));
-
-    const restarnatCatalog = restrauntlist.map(rest => {
+    const restarnatCatalog = props.restaraunts.restaraunts.map(rest => {
         return (
             <div key={rest._id} className="col-12 col-md-5 m-1">
                 <FadeTransform
@@ -112,32 +105,51 @@ const RestarauntsList = () => {
             </div>
         );
     });
-    return (
-        <div className="container mb-5">
-            <div className="row">
-                <Breadcrumb>
-                    <BreadcrumbItem>
-                        <Link
-                            to="/home"
-                            style={{
-                                color: "#0b0704"
-                            }}
-                        >
-                            Home
-                </Link>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem active>Restaurant's</BreadcrumbItem>
-                </Breadcrumb>
-                <div className="col-12">
-                    <h3>Restaurant's near you</h3>
-                    <hr />
+    if (props.restaraunts.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    isLoading
+            </div>
+            </div>
+        );
+    }
+    else if (props.restaraunts.errMess) {
+        return (
+            <div className="container">
+                <div className="row" style={{ height: "50vh" }}>
+                    <h4>{props.restaraunts.errMess}</h4>
                 </div>
             </div>
+        );
+    }
+    else {
+        return (
+            <div className="container mb-5">
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem>
+                            <Link
+                                to="/home"
+                                style={{
+                                    color: "#0b0704"
+                                }}
+                            >
+                                Home
+                </Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem active>Restaurant's</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>Restaurant's near you</h3>
+                        <hr />
+                    </div>
+                </div>
 
-            <div className="row">{restarnatCatalog}</div>
-        </div>
-    );
-
+                <div className="row">{restarnatCatalog}</div>
+            </div>
+        );
+    }
 };
 
 export default RestarauntsList;

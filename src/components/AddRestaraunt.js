@@ -26,7 +26,6 @@ class AddRestaraunt extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleSubmit(values) {
-        console.log(values);
         let form_data = new FormData();
         form_data.append(
             "resImage",
@@ -52,7 +51,6 @@ class AddRestaraunt extends Component {
                     if (response.status === 201) {
                         alert("Restaraunt created");
                     } else {
-                        console.log(response.message)
                         var error = new Error(
                             "Error " + response.status + ": " + response.statusText
                         );
@@ -65,7 +63,6 @@ class AddRestaraunt extends Component {
                 }
             )
             .catch(err => {
-                console.log(err.message);
                 alert("Restaraunt not created check email ID or phone")
             }
             );

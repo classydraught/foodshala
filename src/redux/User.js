@@ -1,7 +1,7 @@
 import * as actionTypes from "./ActionTypes";
 export const User = (
     state = {
-        isLoading: false,
+        isLoading: true,
         LoggedIn: false,
         UserData: {},
         errMess: null
