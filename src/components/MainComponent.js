@@ -62,7 +62,7 @@ class Main extends Component {
     }
 
     render() {
-        // console.log(this.props);
+        console.log(this.props);
         return (<><Header
             loginUser={this.props.loginUser}
             LogOutUser={this.props.LogOutUser}
@@ -83,7 +83,7 @@ class Main extends Component {
                         <Route exact path="/register" component={() => <RegisterUser resetUserDetails={this.props.resetUserDetails} />} />
                         <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} />} />
                         <Route exact path="/resprofile" component={RestProfile} />
-                        <Route exact path="/userprofile" component={UserProfile} />
+                        <Route exact path="/userprofile" component={() => <UserProfile user={this.props.user} />} />
                         <Route exact path="/adddish" component={AddDish} />
                         <Route exact path="/cart" component={Cart} />
                         <Route exact path="/resorders" component={Orders} />

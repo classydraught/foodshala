@@ -14,7 +14,8 @@ import { CardBody, CardImg, Breadcrumb, BreadcrumbItem } from "reactstrap";
 // import { lime, grey } from "@material-ui/core/colors";
 import Divider from "@material-ui/core/Divider";
 import { FadeTransform } from "react-animation-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
 
 // const useStyles = makeStyles(theme => ({
 //     root: {
@@ -100,63 +101,74 @@ import { Link } from "react-router-dom";
 //     );
 // }
 function Profile(props) {
-    return (
-        <div className="container">
-            <Breadcrumb>
-                <BreadcrumbItem>
-                    <Link
-                        to="/home"
-                        style={{
-                            color: "#0b0704"
-                        }}
-                    >
-                        Home
-            </Link>
-                </BreadcrumbItem>
-                <BreadcrumbItem active>Profile</BreadcrumbItem>
-            </Breadcrumb>
-            <div className="row">
-                <div className="col-12 col-md-4">
-                    <FadeTransform
-                        in
-                        transformProps={{
-                            exitTransform: "scale(0.2) translateY(-20%)"
-                        }}
-                    >
-                        <div className="card my-3 profilecard">
-                            <CardImg
-                                src="assets/propic1.jpg"
-                                className="image--cover mx-auto"
-                            />
-                            <h3>Avinash Bommi</h3>
-                            <CardBody>
-                                <Divider />
-                                <p className="text-center mt-3">
-                                    <span role="img" aria-label="victory">
-                                        &nbsp;😋
+    if (props.user.isLoading) {
+        return (<div>
+            is Loading
+        </div>)
+    }
+    else if (localStorage.getItem("foodshalakey")) {
+        return (
+            <div className="container">
+                <Breadcrumb>
+                    <BreadcrumbItem>
+                        <Link
+                            to="/home"
+                            style={{
+                                color: "#0b0704"
+                            }}
+                        >
+                            Home
+                   </Link>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem active>Profile</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="row">
+                    <div className="col-12 col-md-4">
+                        <FadeTransform
+                            in
+                            transformProps={{
+                                exitTransform: "scale(0.2) translateY(-20%)"
+                            }}
+                        >
+                            <div className="card my-3 profilecard">
+                                <CardImg
+                                    src={baseUrl + props.user.UserData.profilepic}
+                                    className="image--cover mx-auto"
+                                />
+                                <h3>{props.user.UserData.username}</h3>
+                                <CardBody>
+                                    <Divider />
+                                    <p className="text-center mt-3">
+                                        <span role="img" aria-label="victory">
+                                            &nbsp;😋
                     </span>
                     foodie
                   </p>
-                                <div className="mt-3">
-                                    <i className="fa fa-2x fa-facebook m-2"></i>
-                                    <i className="fa fa-2x fa-instagram m-2"></i>
-                                    <i className="fa fa-2x fa-twitter m-2"></i>
-                                    <i className="fa fa-2x fa-dribbble m-2"></i>
-                                </div>
-                            </CardBody>
-                        </div>
-                    </FadeTransform>
-                </div>
-                <div className="col-12 col-md-8 my-3 ">
-                    <h3 className="text-center">My favorites</h3>
-                    <Divider className="mb-3" />
-                    <div className="row">
+                                    <div className="mt-3">
+                                        <i className="fa fa-2x fa-facebook m-2"></i>
+                                        <i className="fa fa-2x fa-instagram m-2"></i>
+                                        <i className="fa fa-2x fa-twitter m-2"></i>
+                                        <i className="fa fa-2x fa-dribbble m-2"></i>
+                                    </div>
+                                </CardBody>
+                            </div>
+                        </FadeTransform>
+                    </div>
+                    <div className="col-12 col-md-8 my-3 ">
+                        <h3 className="text-center">My favorites</h3>
+                        <Divider className="mb-3" />
+                        <div className="row">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+
+        );
+    }
+    else {
+        return <Redirect to="/home" />
+    }
 
 }
 

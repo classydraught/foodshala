@@ -80,6 +80,7 @@ export const loggedOutUser = () => ({
 });
 
 export const alreadyLoggedin = () => dispatch => {
+    dispatch(UserLoading(true));
     return fetch(baseUrl + "user/getuserdata", {
         method: "GET",
         headers: {
@@ -119,10 +120,19 @@ export const alreadyLoggedin = () => dispatch => {
             );
         })
         .catch(error => {
-            console.log(error);
-            alert("Wrong Credentials/ Kindly check email or password");
+            dispatch(FailedUserLogin())
+            alert("Session Experied / please login again");
         });
 };
+
+export const UserLoading = () => ({
+    type: actionTypes.USER_LOADING
+});
+
+export const FailedUserLogin = () => ({
+    type: actionTypes.FAILED_USERLOGIN
+})
+
 
 export const resLogin = (email, password) => dispatch => {
     const loginUser = {
@@ -224,7 +234,7 @@ export const alreadyLoggedinRes = () => dispatch => {
         })
         .catch(error => {
             console.log(error);
-            alert("Wrong Credentials/ Kindly check email or password");
+            alert("Session experied / Please login again");
         });
 };
 
