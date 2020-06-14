@@ -8,6 +8,16 @@ import {
 } from 'reactstrap';
 
 class RestarauntLogin extends Component {
+    constructor(props) {
+        super(props);
+        this.handleLogin = this.handleLogin.bind(this);
+    }
+
+    handleLogin(event) {
+        event.preventDefault();
+        this.props.resLogin(this.email.value, this.password.value);
+    }
+
     render() {
         return (
             <div style={{ backgroundColor: "#f56c3a" }}>

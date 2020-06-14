@@ -16,15 +16,13 @@ export const User = (
                 UserData: action.payload
             };
         case actionTypes.LOGOUT_USER:
-            localStorage.removeItem("foodshalakey");
+            localStorage.clear();
             return {
                 ...state,
                 LoggedIn: false,
                 errMess: null,
                 UserData: action.payload
             };
-
-
         default:
             return state;
     }

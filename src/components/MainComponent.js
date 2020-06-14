@@ -17,7 +17,7 @@ import Orders from './ResOrders';
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { loginUser, LogOutUser, alreadyLoggedin } from "../redux/ActionCreator";
+import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes } from "../redux/ActionCreator";
 
 
 
@@ -36,6 +36,12 @@ const mapDispatchToProps = dispatch => ({
     },
     alreadyLoggedin: () => {
         dispatch(alreadyLoggedin());
+    },
+    resLogin: (email, password) => {
+        dispatch(resLogin(email, password));
+    },
+    alreadyLoggedinRes: () => {
+        dispatch(alreadyLoggedinRes());
     }
 
 })
@@ -46,10 +52,13 @@ class Main extends Component {
         if (localStorage.getItem("foodshalakey") && !this.props.user.LoggedIn) {
             this.props.alreadyLoggedin();
         }
+        if (localStorage.getItem("foodshalareskey") && !this.props.user.LoggedIn) {
+            this.props.alreadyLoggedinRes();
+        }
     }
 
     render() {
-
+        // console.log(this.props);
         return (<><Header
             loginUser={this.props.loginUser}
             LogOutUser={this.props.LogOutUser}
@@ -68,8 +77,8 @@ class Main extends Component {
                         <Route exact path="/restmenu" component={RestarauntDetail} />
                         <Route exact path="/addrestaraunt" component={AddRestaraunt} />
                         <Route exact path="/register" component={RegisterUser} />
-                        <Route exact path="/reslogin" component={RestarauntLogin} />
-                        <Route exact path="/restprofile" component={RestProfile} />
+                        <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} />} />
+                        <Route exact path="/resprofile" component={RestProfile} />
                         <Route exact path="/userprofile" component={UserProfile} />
                         <Route exact path="/adddish" component={AddDish} />
                         <Route exact path="/cart" component={Cart} />

@@ -124,21 +124,126 @@ export const alreadyLoggedin = () => dispatch => {
         });
 };
 
+export const resLogin = (email, password) => dispatch => {
+    const loginUser = {
+        email: email,
+        password: password
+    };
+    console.log(loginUser);
+    return fetch(baseUrl + "restaraunt/login", {
+        method: "POST",
+        body: JSON.stringify(loginUser),
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+        .then(
+            response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    var error = new Error(
+                        "Error " + response.status + ": " + response.statusText
+                    );
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            }
+        )
+        .then(response => response.json())
+        .then(response => {
+            localStorage.setItem("foodshalareskey", response.token);
+            dispatch(
+                resLoggedin(
+                    response.email,
+                    response.resname,
+                    response.ownername,
+                    response.id,
+                    response.image,
+                    response.resorders,
+                    response.accountType,
+                    response.dishes,
+                    response.style,
+                    response.phone,
+                    response.address
+                )
+            );
+            window.location = "/resprofile";
+        })
+        .catch(error => {
+            console.log(error);
+            alert("Wrong Credentials/ Kindly check email or password");
+        });
+};
 
 
-// export const alreadyloggedinUser = (email, username, id, image, userorders, accountType, preference, favourites, phone) => ({
+export const alreadyLoggedinRes = () => dispatch => {
+    return fetch(baseUrl + "restaraunt/getresdata", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("foodshalareskey")
+        },
+        credentials: "same-origin"
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                var error = new Error(
+                    "Error " + response.status + ": " + response.statusText
+                );
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                throw error;
+            }
+        ).then(response => response.json())
+        .then(response => {
+            dispatch(
+                resLoggedin(
+                    response.email,
+                    response.resname,
+                    response.ownername,
+                    response.id,
+                    response.image,
+                    response.resorders,
+                    response.accountType,
+                    response.dishes,
+                    response.style,
+                    response.phone,
+                    response.address
+                )
+            );
+        })
+        .catch(error => {
+            console.log(error);
+            alert("Wrong Credentials/ Kindly check email or password");
+        });
+};
 
-//     type: actionTypes.ALREADY_LOGGEDIN,
-//     payload: {
-//         email: email,
-//         username: username,
-//         id: id,
-//         profilepic: image,
-//         userorders: userorders,
-//         accountType: accountType,
-//         preference: preference,
-//         favourites: favourites,
-//         phone: phone
-//     }
+export const resLoggedin = (email, resname, ownername, id, image, resorders, accountType, dishes, style, phone, address) => ({
+    type: actionTypes.LOGIN_USER,
+    payload: {
+        email: email,
+        resname: resname,
+        ownername: ownername,
+        dishes: dishes,
+        id: id,
+        respic: image,
+        resorders: resorders,
+        accountType: accountType,
+        style: style,
+        orders: resorders,
+        phone: phone,
+        address: address
+    }
+})
 
-// });
+
