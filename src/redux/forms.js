@@ -11,7 +11,7 @@ export const RegisterUserDetails = {
     username: "",
     email: "",
     password: "",
-    preference: "",
+    preference: "vegan",
     profileImage: "",
     phone: ""
 };
@@ -20,10 +20,10 @@ export const RegisterRestarauntDetails = {
     ownername: "",
     email: "",
     password: "",
-    confirmpassword: "",
-    style: "",
+    style: "vegan",
     resImage: "",
-    phone: ""
+    phone: "",
+    address: ""
 };
 export const addDishDetails = {
     name: "",

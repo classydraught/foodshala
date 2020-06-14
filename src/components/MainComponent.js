@@ -47,6 +47,9 @@ const mapDispatchToProps = dispatch => ({
     resetUserDetails: () => {
         dispatch(actions.reset("registeruser"));
     },
+    resetRestarauntDetails: () => {
+        dispatch(actions.reset("registerres"));
+    }
 
 })
 
@@ -79,7 +82,7 @@ class Main extends Component {
                         <Route exact path="/contactus" component={Contact} />
                         <Route exact path="/restaraunts" component={RestarauntsList} />
                         <Route exact path="/restmenu" component={RestarauntDetail} />
-                        <Route exact path="/addrestaraunt" component={AddRestaraunt} />
+                        <Route exact path="/addrestaraunt" component={() => <AddRestaraunt resetRestarauntDetails={this.props.resetRestarauntDetails} />} />
                         <Route exact path="/register" component={() => <RegisterUser resetUserDetails={this.props.resetUserDetails} />} />
                         <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} />} />
                         <Route exact path="/resprofile" component={RestProfile} />

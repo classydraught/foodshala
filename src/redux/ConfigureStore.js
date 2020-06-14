@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import logger from "redux-logger";
 import { User } from "./User";
 import { createForms } from "react-redux-form";
-import { InitialFeedback, RegisterUserDetails, } from "./forms";
+import { InitialFeedback, RegisterUserDetails, RegisterRestarauntDetails } from "./forms";
 
 
 export const storeConfig = () => {
@@ -12,6 +12,7 @@ export const storeConfig = () => {
             user: User,
             ...createForms({ feedback: InitialFeedback }),
             ...createForms({ registeruser: RegisterUserDetails }),
+            ...createForms({ registerres: RegisterRestarauntDetails })
         }),
         applyMiddleware(thunk, logger)
     );
