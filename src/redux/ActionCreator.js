@@ -46,7 +46,6 @@ export const loginUser = (email, password) => dispatch => {
                     response.phone
                 )
             );
-            window.location = "/userprofile";
         })
         .catch(error => {
             console.log(error);
@@ -192,6 +191,7 @@ export const resLogin = (email, password) => dispatch => {
 
 
 export const alreadyLoggedinRes = () => dispatch => {
+    dispatch(UserLoading(true));
     return fetch(baseUrl + "restaraunt/getresdata", {
         method: "GET",
         headers: {
@@ -233,8 +233,8 @@ export const alreadyLoggedinRes = () => dispatch => {
             );
         })
         .catch(error => {
-            console.log(error);
-            alert("Session experied / Please login again");
+            dispatch(FailedUserLogin())
+            alert("Session Experied / please login again");
         });
 };
 

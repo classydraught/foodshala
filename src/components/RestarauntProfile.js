@@ -14,7 +14,8 @@ import { CardBody, CardImg, Breadcrumb, BreadcrumbItem } from "reactstrap";
 // import { lime, grey } from "@material-ui/core/colors";
 import Divider from "@material-ui/core/Divider";
 import { FadeTransform } from "react-animation-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
 
 // const useStyles = makeStyles(theme => ({
 //     root: {
@@ -100,63 +101,80 @@ import { Link } from "react-router-dom";
 //     );
 // }
 function RestarauntProfile(props) {
-    return (
-        <div className="container">
-            <Breadcrumb>
-                <BreadcrumbItem>
-                    <Link
-                        to="/home"
-                        style={{
-                            color: "#0b0704"
-                        }}
-                    >
-                        Home
+    if (props.user.isLoading) {
+        return (<div>
+            is Loading
+        </div>)
+    }
+    else if (localStorage.getItem("foodshalareskey")) {
+        var disheslength, ordersLength;
+        if (props.user.LoggedIn) {
+            disheslength = props.user.UserData.dishes.length;
+            ordersLength = props.user.UserData.resorders.length;
+        }
+        return (
+            <div className="container">
+                <Breadcrumb>
+                    <BreadcrumbItem>
+                        <Link
+                            to="/home"
+                            style={{
+                                color: "#0b0704"
+                            }}
+                        >
+                            Home
             </Link>
-                </BreadcrumbItem>
-                <BreadcrumbItem active>Restaraunt Profile</BreadcrumbItem>
-            </Breadcrumb>
-            <div className="row">
-                <div className="col-12 col-md-4">
-                    <FadeTransform
-                        in
-                        transformProps={{
-                            exitTransform: "scale(0.2) translateY(-20%)"
-                        }}
-                    >
-                        <div className="card my-3 profilecard">
-                            <CardImg
-                                src="assets/rest5.jpg"
-                                className="image--cover mx-auto"
-                            />
-                            <h3>Restaraunt 1</h3>
-                            <CardBody>
-                                <Divider />
-                                <p className="text-center mt-3">
-                                    <span role="img" aria-label="victory">
-                                        serving the best
-                    </span>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem active>Restaraunt Profile</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="row">
+                    <div className="col-12 col-md-4">
+                        <FadeTransform
+                            in
+                            transformProps={{
+                                exitTransform: "scale(0.2) translateY(-20%)"
+                            }}
+                        >
+                            <div className="card my-3 profilecard">
+                                <CardImg
+                                    src={baseUrl + props.user.UserData.respic}
+                                    className="image--cover mx-auto"
+                                />
+                                <h3>{props.user.UserData.resname}</h3>
+                                <CardBody>
+                                    <Divider />
+                                    <h6 className="text-center mt-2">Number of dishes : {disheslength}</h6>
+                                    <h6 className="text-center mt-2">Active orders : {ordersLength}</h6>
 
-                                </p>
-                                <div className="mt-3">
-                                    <i className="fa fa-2x fa-facebook m-2"></i>
-                                    <i className="fa fa-2x fa-instagram m-2"></i>
-                                    <i className="fa fa-2x fa-twitter m-2"></i>
-                                    <i className="fa fa-2x fa-dribbble m-2"></i>
-                                </div>
-                            </CardBody>
+                                    <p className="text-center mt-2">
+                                        <span role="img" aria-label="victory">
+                                            serving the best
+                                   </span>
+
+                                    </p>
+                                    <div className="mt-3 text-center">
+                                        <i className="fa fa-2x fa-facebook m-2"></i>
+                                        <i className="fa fa-2x fa-instagram m-2"></i>
+                                        <i className="fa fa-2x fa-twitter m-2"></i>
+                                    </div>
+                                </CardBody>
+                            </div>
+                        </FadeTransform>
+                    </div>
+                    <div className="col-12 col-md-8 my-3 ">
+                        <h3 className="text-center">Menu</h3>
+                        <Divider className="mb-3" />
+                        <div className="row">
+
                         </div>
-                    </FadeTransform>
-                </div>
-                <div className="col-12 col-md-8 my-3 ">
-                    <h3 className="text-center">Menu</h3>
-                    <Divider className="mb-3" />
-                    <div className="row">
-
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
+    else {
+        return <Redirect to="/home" />
+    }
 
 }
 

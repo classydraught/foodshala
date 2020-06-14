@@ -18,6 +18,17 @@ import {
 import { NavLink } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import {
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
+} from "reactstrap";
+import Avatar from "@material-ui/core/Avatar";
+import { baseUrl } from "../shared/baseUrl";
+import { Divider } from '@material-ui/core';
+
+
 
 
 class Header extends Component {
@@ -68,6 +79,7 @@ class Header extends Component {
     }
 
     render() {
+
         return (
             <>
                 <div>
@@ -79,7 +91,7 @@ class Header extends Component {
                                     src="assets/favicon.png"
                                     width="55"
                                     height="50"
-                                    alt="Robovidhya"
+                                    alt="foodshala"
                                 />
                             </NavbarBrand>
                             <Collapse isOpen={this.state.isNavOpen} navbar>
@@ -115,15 +127,106 @@ class Header extends Component {
                                             <span className="fa fa-sign-in fa-lg"></span>{" "}
                                             &nbsp;&nbsp;Login
                                      </Button>
-                                    </NavItem> : <NavItem >
-                                            <Button
-                                                variant="outlined"
-                                                style={{ color: "#fff" }}
-                                                onClick={this.props.LogOutUser}
+                                    </NavItem> : <NavItem>
+                                            <Dropdown
+                                                isOpen={this.state.isdropdownOpen}
+                                                toggle={this.toggleDropdown}
                                             >
-                                                <span className="fa fa-sign-in fa-lg"></span>{" "}
-                                            &nbsp;&nbsp;Logout
-                                     </Button>
+                                                <DropdownToggle>
+                                                    <i className="fa fa-chevron-circle-down "></i>
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+                                                    {this.props.user.UserData.accountType === "User" ? <DropdownItem>
+                                                        <Link
+                                                            to="/userprofile"
+                                                            style={{
+                                                                color: "#0b0704",
+                                                                textDecoration: "none"
+                                                            }}
+                                                        >
+                                                            <Avatar
+                                                                className="mx-auto mb-2"
+                                                                src={
+                                                                    baseUrl + this.props.user.UserData.profilepic
+                                                                }
+                                                            />
+                                                        </Link>
+                                                    </DropdownItem> :
+                                                        <DropdownItem>
+                                                            <Link
+                                                                to="/resprofile"
+                                                                style={{
+                                                                    color: "#0b0704",
+                                                                    textDecoration: "none"
+                                                                }}
+                                                            >
+                                                                <Avatar
+                                                                    className="mx-auto mb-2"
+                                                                    src={
+                                                                        baseUrl + this.props.user.UserData.respic
+                                                                    }
+                                                                />
+                                                            </Link>
+                                                        </DropdownItem>
+
+                                                    }
+                                                    <Divider />
+                                                    {this.props.user.UserData.accountType === "User" ? <DropdownItem>
+                                                        <Link
+                                                            to="/cart"
+                                                            style={{
+                                                                color: "#0b0704",
+                                                                textDecoration: "none"
+                                                            }}
+                                                        >
+                                                            <i className="fa fa-shopping-cart"></i>
+                                                       &nbsp;&nbsp;My cart
+                                                   </Link>
+                                                    </DropdownItem> : <DropdownItem>
+                                                            <Link
+                                                                to="/adddish"
+                                                                style={{
+                                                                    color: "#0b0704",
+                                                                    textDecoration: "none"
+                                                                }}
+                                                            >
+                                                                <i className="fa fa-plus-circle"></i>
+                                                       &nbsp;&nbsp;Add a dish
+                                                   </Link>
+                                                        </DropdownItem>}
+
+                                                    {this.props.user.UserData.accountType === "User" ? <DropdownItem>
+                                                        <Link
+                                                            to="/cart"
+                                                            style={{
+                                                                color: "#0b0704",
+                                                                textDecoration: "none"
+                                                            }}
+                                                        >
+                                                            <i className="fa fa fa-first-order"></i>
+                                                       &nbsp;&nbsp;My orders
+                                                   </Link>
+                                                    </DropdownItem> : <DropdownItem>
+                                                            <Link
+                                                                to="/resorders"
+                                                                style={{
+                                                                    color: "#0b0704",
+                                                                    textDecoration: "none"
+                                                                }}
+                                                            >
+                                                                <i className="fa fa fa-first-order"></i>
+                                                       &nbsp;&nbsp;Active orders
+                                                   </Link>
+                                                        </DropdownItem>}
+                                                    <DropdownItem
+                                                        onClick={this.props.LogOutUser}
+                                                        color="#0b0704"
+                                                    >
+                                                        <i className="fa fa-sign-out"></i> Logout
+                                                     </DropdownItem>
+
+                                                </DropdownMenu>
+                                            </Dropdown>
                                         </NavItem>}
                                 </Nav>
                             </Collapse>

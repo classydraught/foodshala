@@ -144,11 +144,10 @@ function Profile(props) {
                     </span>
                     foodie
                   </p>
-                                    <div className="mt-3">
+                                    <div className="mt-3 text-center">
                                         <i className="fa fa-2x fa-facebook m-2"></i>
                                         <i className="fa fa-2x fa-instagram m-2"></i>
                                         <i className="fa fa-2x fa-twitter m-2"></i>
-                                        <i className="fa fa-2x fa-dribbble m-2"></i>
                                     </div>
                                 </CardBody>
                             </div>
