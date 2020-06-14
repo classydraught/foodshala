@@ -11,7 +11,6 @@ export const RegisterUserDetails = {
     username: "",
     email: "",
     password: "",
-    confirmpassword: "",
     preference: "",
     profileImage: "",
     phone: ""

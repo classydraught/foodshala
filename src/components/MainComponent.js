@@ -18,6 +18,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes } from "../redux/ActionCreator";
+import { actions } from "react-redux-form";
 
 
 
@@ -42,7 +43,10 @@ const mapDispatchToProps = dispatch => ({
     },
     alreadyLoggedinRes: () => {
         dispatch(alreadyLoggedinRes());
-    }
+    },
+    resetUserDetails: () => {
+        dispatch(actions.reset("registeruser"));
+    },
 
 })
 
@@ -76,7 +80,7 @@ class Main extends Component {
                         <Route exact path="/restaraunts" component={RestarauntsList} />
                         <Route exact path="/restmenu" component={RestarauntDetail} />
                         <Route exact path="/addrestaraunt" component={AddRestaraunt} />
-                        <Route exact path="/register" component={RegisterUser} />
+                        <Route exact path="/register" component={() => <RegisterUser resetUserDetails={this.props.resetUserDetails} />} />
                         <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} />} />
                         <Route exact path="/resprofile" component={RestProfile} />
                         <Route exact path="/userprofile" component={UserProfile} />
