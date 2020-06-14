@@ -26,6 +26,11 @@ export const Restaraunt = (
                 errMess: action.payload,
                 restaraunts: []
             };
+        case actionTypes.ADD_NEW_RESTARAUNT:
+            return {
+                ...state,
+                restaraunts: state.restaraunts.concat(action.payload)
+            }
         default:
             return state;
     }

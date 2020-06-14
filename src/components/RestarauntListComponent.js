@@ -15,6 +15,7 @@ import { lime, grey } from "@material-ui/core/colors";
 import { FadeTransform } from "react-animation-components";
 import { Link } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
 const useStyles = makeStyles(theme => ({
     root: {
         maxWidth: 345
@@ -48,7 +49,7 @@ function RenderRestaraunt({ rest }) {
     };
     return (
         <Card className="profile-coursecard mt-1 mb-2 ">
-            <Link to={`/restmenu`}>
+            <Link to={`restaraunts/${rest._id}`}>
                 <CardHeader
                     avatar={
                         <Avatar
@@ -81,7 +82,7 @@ function RenderRestaraunt({ rest }) {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sed risus placerat, commodo nibh nec, molestie turpis. Quisque purus magna, semper sed commodo ac, convallis sit amet felis. In hac habitasse platea dictumst. Vestibulum tempor sagittis erat. Duis aliquam id mi vitae ultrices. Donec sollicitudin, nisl sed vehicula tincidunt, purus nulla elementum ligula</Typography>
+                    <Typography>{rest.description}</Typography>
                 </CardContent>
             </Collapse>
         </Card>
@@ -106,13 +107,17 @@ const RestarauntsList = (props) => {
         );
     });
     if (props.restaraunts.isLoading) {
-        return (
-            <div className="container">
-                <div className="row">
-                    isLoading
+        return (<div className="container" style={{ height: "50vh" }}>
+            <div className="row">
+                <div className="col-md-4 col-12">
+                </div>
+                <div className="col-md-4 col-12 mt-5">
+                    <Loading />
+                </div>
+                <div className="col-md-4 col-12">
+                </div>
             </div>
-            </div>
-        );
+        </div>)
     }
     else if (props.restaraunts.errMess) {
         return (

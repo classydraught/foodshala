@@ -292,6 +292,14 @@ export const RestFailed = errormsg => ({
     payload: errormsg
 });
 
+export const addNewRestaraunt = restaraunt => dispatch => {
+    dispatch(addRestaraunttoList(restaraunt));
+};
+export const addRestaraunttoList = restaraunt => ({
+    type: actionTypes.ADD_NEW_RESTARAUNT,
+    payload: restaraunt
+});
+
 
 export const fetchDishes = () => dispatch => {
     dispatch(DishesLoading(true));

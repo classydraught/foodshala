@@ -23,7 +23,8 @@ export const RegisterRestarauntDetails = {
     style: "vegan",
     resImage: "",
     phone: "",
-    address: ""
+    address: "",
+    description: ""
 };
 export const addDishDetails = {
     name: "",

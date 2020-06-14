@@ -15,7 +15,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-
+import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
 const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
@@ -45,20 +46,20 @@ function ItemCard({ item }) {
 
                 </CardContent>
                 <div>
-                    <button type="button" class="btn btn-outline-dark m-3">Buy</button>
-                    <button type="button" class="btn btn-outline-dark"><i class="fa fa-shopping-basket"></i></button>
+                    <button type="button" className="btn btn-outline-dark m-3">Buy</button>
+                    <button type="button" className="btn btn-outline-dark"><i className="fa fa-shopping-basket"></i></button>
                 </div>
             </div>
             <CardMedia
                 className={classes.cover}
-                image={item.image}
+                image={baseUrl + item.image}
             />
         </Card>
     );
 }
 
 
-function RenderRest() {
+function RenderRest({ restaraunt }) {
     return (
         <div className="col-12 col-md-5 mr-md-5 mr-0 ">
             <FadeTransform
@@ -68,9 +69,9 @@ function RenderRest() {
                 }}
             >
                 <div className="card profile-coursecard mb-3">
-                    <CardImg top src="assets/rest3.jpg" alt="restaraunt-1" />
+                    <CardImg top src={baseUrl + restaraunt.image} alt={restaraunt.resname} />
                     <CardBody>
-                        <CardTitle>Restaraunt 1</CardTitle>
+                        <CardTitle>{restaraunt.resname}</CardTitle>
 
                         <Rating
                             name="read-only"
@@ -79,7 +80,7 @@ function RenderRest() {
                             precision={0.1}
                         />
 
-                        <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus felis enim, in pulvinar arcu maximus eu. Suspendisse laoreet eros eget bibendum auctor. Nam ullamcorper arcu non tellus dignissim sagittis.</CardText>
+                        <CardText>{restaraunt.description}</CardText>
                     </CardBody>
                 </div>
             </FadeTransform>
@@ -87,22 +88,16 @@ function RenderRest() {
     );
 }
 
-const items = [
-    { _id: "1", name: "Pizza", image: "assets/food-rest1.jpg" },
-    { _id: "2", name: "Burger", image: "assets/food-rest2.jpg" },
-    { _id: "3", name: "Biryani", image: "assets/food-rest3.jpg" },
-    { _id: "4", name: "Ice cream", image: "assets/food-rest4.jpg" },
-    { _id: "5", name: "Noodles", image: "assets/food-rest5.jpg" }
-]
 
-const Menu = () => {
+const Menu = ({ dishes }) => {
+    console.log(dishes);
     return (<div className="col-12 col-md-5 ">
         <h4>Menu</h4>
         <hr />
         <Stagger in>
             <ul className="list-unstyled">
                 <Stagger in>
-                    {items.map(item => {
+                    {dishes.map(item => {
                         return (
                             <Fade in key={item._id}>
                                 <li className="mb-3" style={{ maxHeight: "10%" }}>
@@ -120,43 +115,61 @@ const Menu = () => {
 }
 
 const RestarauntDetail = props => {
-
-    return (
-        <div className="container mb-5">
-            <div className="row">
-                <Breadcrumb>
-                    <BreadcrumbItem>
-                        <Link
-                            to="/home"
-                            style={{
-                                color: "#0b0704"
-                            }}
-                        >
-                            Home
-                </Link>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem>
-                        <Link
-                            to="/restaraunts"
-                            style={{
-                                color: "#0b0704"
-                            }}
-                        >
-                            Restaraunt's
-                </Link>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem active>Restaraunt 1</BreadcrumbItem>{" "}
-                </Breadcrumb>
-                <div className="col-12 col-6">
-                    <h3>Restaraunt 1</h3> <hr />
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
                 </div>
             </div>
-            <div className="row">
-                <RenderRest />
-                <Menu />
+        );
+    } else if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+    else {
+        return (
+            <div className="container mb-5">
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem>
+                            <Link
+                                to="/home"
+                                style={{
+                                    color: "#0b0704"
+                                }}
+                            >
+                                Home
+                </Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem>
+                            <Link
+                                to="/restaraunts"
+                                style={{
+                                    color: "#0b0704"
+                                }}
+                            >
+                                Restaraunt's
+                </Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem active>{props.restaraunt.resname}</BreadcrumbItem>{" "}
+                    </Breadcrumb>
+                    <div className="col-12 col-6">
+                        <h3>{props.restaraunt.resname}</h3> <hr />
+                    </div>
+                </div>
+                <div className="row">
+                    <RenderRest restaraunt={props.restaraunt} />
+                    <Menu dishes={props.dishes} />
+                </div>
+            </div>
+        );
+    }
 };
 
 export default RestarauntDetail;

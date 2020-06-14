@@ -17,7 +17,7 @@ import Orders from './ResOrders';
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes } from "../redux/ActionCreator";
+import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt } from "../redux/ActionCreator";
 import { actions } from "react-redux-form";
 
 
@@ -52,6 +52,9 @@ const mapDispatchToProps = dispatch => ({
     fetchDishes: () => {
         dispatch(fetchDishes());
     },
+    addNewRestaraunt: restaraunt => {
+        dispatch(addNewRestaraunt(restaraunt));
+    },
     resetUserDetails: () => {
         dispatch(actions.reset("registeruser"));
     },
@@ -76,6 +79,23 @@ class Main extends Component {
     }
 
     render() {
+        const RestarauntDetailId = ({ match }) => {
+            return (
+                <RestarauntDetail
+                    restaraunt={
+                        this.props.restaraunts.restaraunts.filter(
+                            restaraunt => restaraunt._id === match.params.resId
+                        )[0]
+                    }
+                    isLoading={this.props.restaraunts.isLoading}
+                    errMess={this.props.restaraunts.errMess}
+                    dishes={this.props.dishes.dishes.filter(
+                        dish => dish.resId === match.params.resId
+                    )}
+                    disheserrMess={this.props.dishes.errMess}
+                />
+            );
+        };
         return (<><Header
             loginUser={this.props.loginUser}
             LogOutUser={this.props.LogOutUser}
@@ -91,8 +111,8 @@ class Main extends Component {
                         <Route exact path="/aboutus" component={Aboutus} />
                         <Route exact path="/contactus" component={Contact} />
                         <Route exact path="/restaraunts" component={() => <RestarauntsList restaraunts={this.props.restaraunts} user={this.props.user} />} />
-                        <Route exact path="/restmenu" component={RestarauntDetail} />
-                        <Route exact path="/addrestaraunt" component={() => <AddRestaraunt resetRestarauntDetails={this.props.resetRestarauntDetails} />} />
+                        <Route path="/restaraunts/:resId" component={RestarauntDetailId} />
+                        <Route exact path="/addrestaraunt" component={() => <AddRestaraunt resetRestarauntDetails={this.props.resetRestarauntDetails} addNewRestaraunt={this.props.addNewRestaraunt} />} />
                         <Route exact path="/register" component={() => <RegisterUser resetUserDetails={this.props.resetUserDetails} />} />
                         <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} />} />
                         <Route exact path="/resprofile" component={() => <RestProfile user={this.props.user} />} />

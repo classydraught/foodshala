@@ -16,6 +16,8 @@ import Divider from "@material-ui/core/Divider";
 import { FadeTransform } from "react-animation-components";
 import { Link, Redirect } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
+
 
 // const useStyles = makeStyles(theme => ({
 //     root: {
@@ -102,8 +104,16 @@ import { baseUrl } from "../shared/baseUrl";
 // }
 function Profile(props) {
     if (props.user.isLoading) {
-        return (<div>
-            is Loading
+        return (<div className="container" style={{ height: "50vh" }}>
+            <div className="row">
+                <div className="col-md-4 col-12">
+                </div>
+                <div className="col-md-4 col-12 mt-5">
+                    <Loading />
+                </div>
+                <div className="col-md-4 col-12">
+                </div>
+            </div>
         </div>)
     }
     else if (localStorage.getItem("foodshalakey")) {

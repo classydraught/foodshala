@@ -39,6 +39,7 @@ class AddRestaraunt extends Component {
         form_data.append("password", values.password);
         form_data.append("style", values.style);
         form_data.append("address", values.address);
+        form_data.append("description", values.description);
         let url = baseUrl + "restaraunt/signup";
         axios
             .post(url, form_data, {
@@ -50,6 +51,7 @@ class AddRestaraunt extends Component {
                 response => {
                     if (response.status === 201) {
                         alert("Restaraunt created");
+                        this.props.addNewRestaraunt(response.data);
                     } else {
                         var error = new Error(
                             "Error " + response.status + ": " + response.statusText
@@ -242,6 +244,27 @@ class AddRestaraunt extends Component {
                                         messages={{
                                             required: "Required ",
                                             minLength: "Must be atleast 10 Characters ",
+                                            maxLength: "Must be 150 charactesr only ",
+                                        }}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={12}>
+                                    <Control.text
+                                        model=".description"
+                                        className="form-control"
+                                        id="description"
+                                        name="description"
+                                        placeholder="Short description"
+                                        validators={{
+                                            maxLength: maxLength(150)
+                                        }}
+                                    />
+                                    <Errors
+                                        model=".description"
+                                        show="touched"
+                                        messages={{
                                             maxLength: "Must be 150 charactesr only ",
                                         }}
                                     />
