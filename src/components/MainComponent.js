@@ -17,7 +17,7 @@ import Orders from './ResOrders';
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt } from "../redux/ActionCreator";
+import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt, addNewDish } from "../redux/ActionCreator";
 import { actions } from "react-redux-form";
 
 
@@ -55,11 +55,17 @@ const mapDispatchToProps = dispatch => ({
     addNewRestaraunt: restaraunt => {
         dispatch(addNewRestaraunt(restaraunt));
     },
+    addNewDish: dish => {
+        dispatch(addNewDish(dish))
+    },
     resetUserDetails: () => {
         dispatch(actions.reset("registeruser"));
     },
     resetRestarauntDetails: () => {
         dispatch(actions.reset("registerres"));
+    },
+    resetDishDetails: () => {
+        dispatch(actions.reset("addDish"));
     }
 
 
@@ -117,7 +123,7 @@ class Main extends Component {
                         <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} />} />
                         <Route exact path="/resprofile" component={() => <RestProfile user={this.props.user} />} />
                         <Route exact path="/userprofile" component={() => <UserProfile user={this.props.user} />} />
-                        <Route exact path="/adddish" component={AddDish} />
+                        <Route exact path="/adddish" component={() => <AddDish user={this.props.user} addNewDish={this.props.addNewDish} resetDishDetails={this.props.resetDishDetails} />} />
                         <Route exact path="/cart" component={Cart} />
                         <Route exact path="/resorders" component={Orders} />
                         <Redirect to="/home" />

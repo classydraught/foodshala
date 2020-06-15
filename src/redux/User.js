@@ -1,7 +1,7 @@
 import * as actionTypes from "./ActionTypes";
 export const User = (
     state = {
-        isLoading: true,
+        isLoading: false,
         LoggedIn: false,
         UserData: {},
         errMess: null
@@ -42,6 +42,13 @@ export const User = (
                 LoggedIn: false,
                 errMess: null,
                 UserData: {}
+            }
+        case actionTypes.ADD_NEW_DISH:
+            return {
+                ...state,
+                UserData: {
+                    ...state.UserData, dishes: state.UserData.dishes.concat(action.payload)
+                }
             }
         default:
             return state;

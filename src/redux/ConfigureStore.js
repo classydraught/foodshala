@@ -5,7 +5,7 @@ import { User } from "./User";
 import { Restaraunt } from "./Restaraunt";
 import { Dish } from "./Dishes";
 import { createForms } from "react-redux-form";
-import { InitialFeedback, RegisterUserDetails, RegisterRestarauntDetails } from "./forms";
+import { InitialFeedback, RegisterUserDetails, RegisterRestarauntDetails, addDishDetails } from "./forms";
 
 
 export const storeConfig = () => {
@@ -16,7 +16,8 @@ export const storeConfig = () => {
             dishes: Dish,
             ...createForms({ feedback: InitialFeedback }),
             ...createForms({ registeruser: RegisterUserDetails }),
-            ...createForms({ registerres: RegisterRestarauntDetails })
+            ...createForms({ registerres: RegisterRestarauntDetails }),
+            ...createForms({ addDish: addDishDetails })
         }),
         applyMiddleware(thunk, logger)
     );

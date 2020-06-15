@@ -31,8 +31,7 @@ export const addDishDetails = {
     price: "",
     category: "",
     featured: false,
-    description: "",
-    vegan: "",
+    vegan: false,
     dishImage: ""
 }
 

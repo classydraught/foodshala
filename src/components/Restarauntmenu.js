@@ -90,7 +90,6 @@ function RenderRest({ restaraunt }) {
 
 
 const Menu = ({ dishes }) => {
-    console.log(dishes);
     return (<div className="col-12 col-md-5 ">
         <h4>Menu</h4>
         <hr />

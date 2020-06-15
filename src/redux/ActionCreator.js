@@ -340,6 +340,15 @@ export const DishesFailed = errormsg => ({
     payload: errormsg
 });
 
+export const addNewDish = dish => dispatch => {
+    dispatch(addNewDishtoList(dish));
+};
+export const addNewDishtoList = dish => ({
+    type: actionTypes.ADD_NEW_DISH,
+    payload: dish
+});
+
+
 
 
 

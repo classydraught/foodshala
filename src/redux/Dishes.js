@@ -18,6 +18,8 @@ export const Dish = (
 
         case actionTypes.DISHES_LOADING:
             return { ...state, isLoading: true, errMess: null, dishes: [] };
+        case actionTypes.ADD_NEW_DISH:
+            return { ...state, dishes: state.dishes.concat(action.payload) };
 
         case actionTypes.DISHES_FAILED:
             return {
