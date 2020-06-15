@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     CardImg,
     CardBody,
@@ -6,6 +6,9 @@ import {
     CardText,
     Breadcrumb,
     BreadcrumbItem,
+    Modal,
+    ModalBody,
+    ModalHeader
 } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
@@ -17,6 +20,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
+
+
 const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
@@ -33,32 +38,6 @@ const useStyles = makeStyles(() => ({
         marginLeft: "auto"
     },
 }));
-function ItemCard({ item }) {
-    const classes = useStyles();
-
-    return (
-        <Card className={classes.root}>
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5">
-                        {item.name}
-                    </Typography>
-
-                </CardContent>
-                <div>
-                    <button type="button" className="btn btn-outline-dark m-3">Buy</button>
-                    <button type="button" className="btn btn-outline-dark"><i className="fa fa-shopping-basket"></i></button>
-                </div>
-            </div>
-            <CardMedia
-                className={classes.cover}
-                image={baseUrl + item.image}
-            />
-        </Card>
-    );
-}
-
-
 function RenderRest({ restaraunt }) {
     return (
         <div className="col-12 col-md-5 mr-md-5 mr-0 ">
@@ -89,9 +68,69 @@ function RenderRest({ restaraunt }) {
 }
 
 
-const Menu = ({ dishes }) => {
+
+const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
+
+
+    var [usrdishes, addDishlocal] = useState([]);
+
+
+
+    function ItemCard({ item, user }) {
+        const classes = useStyles();
+        return (
+            <Card className={classes.root}>
+                <div className={classes.details}>
+                    <CardContent className={classes.content}>
+                        <Typography component="h5" variant="h5">
+                            {item.name}
+                        </Typography>
+                    </CardContent>
+                    <div>
+                        <h6 className="ml-3">{item.price} /-</h6>
+                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3">Buy</button> : <span></span>}
+                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => addDishlocal(usrdishes.concat(item))}><i className="fa fa-shopping-basket"></i></button> : <span></span>}
+                    </div>
+                </div>
+                <CardMedia
+                    className={classes.cover}
+                    image={baseUrl + item.image}
+                />
+            </Card>
+        );
+    }
+    var [isModalOpen, toggleModal] = useState(false);
+
+    var total = 0;
+    const obj = {};
+    usrdishes.map(val => {
+        total += val.price;
+        obj[val._id] = typeof (obj[val._id]) === "undefined" ? { name: val.name, items: 1, price: val.price } :
+            { name: val.name, items: obj[val._id].items + 1, price: val.price * (obj[val._id].items + 1) }
+        return total;
+    }
+    );
     return (<div className="col-12 col-md-5 ">
+
+        <Modal isOpen={isModalOpen} toggle={() => toggleModal(!isModalOpen)} >
+            <ModalHeader toggle={() => toggleModal(!isModalOpen)} className="login-modal">Place Order</ModalHeader>
+            <ModalBody>
+                {usrdishes.length === 0 ? <div>No item selected</div> : <div>
+                    {
+                        Object.entries(obj).map(item =>
+                            <div>{item[1].name} x {item[1].items} <span className="m-3"></span> : &emsp; {item[1].price}</div>
+                        )
+                    }
+                    <span> Total bill &emsp;&emsp;:   <span className="mt-3 ml-5">{total}</span></span>
+                    <br />
+                    <button className="btn btn-dark m-md-5 mt-3 mr-3" onClick={() => { placeOrder(usrdishes); toggleModal(!isModalOpen); addDishlocal((usrdishes = [])) }}>Place order</button>
+                    <button className="btn btn-dark m-md-5 mt-3" onClick={() => addDishlocal((usrdishes = []))}>Clear cart</button>
+                </div>
+                }
+            </ModalBody>
+        </Modal>
         <h4>Menu</h4>
+        {(user.LoggedIn && user.UserData.accountType === "User") ? (<><button className="btn btn-outline-dark mt-2 mr-5" onClick={() => toggleModal(!isModalOpen)}>Confrim Order</button>  <span className="fa fa-shopping-cart fa-lg ml-5"></span><span className="badge badge-dark ml-3">{usrdishes.length}</span></>) : <span></span>}
         <hr />
         <Stagger in>
             <ul className="list-unstyled">
@@ -100,7 +139,7 @@ const Menu = ({ dishes }) => {
                         return (
                             <Fade in key={item._id}>
                                 <li className="mb-3" style={{ maxHeight: "10%" }}>
-                                    <ItemCard item={item} />
+                                    <ItemCard item={item} user={user} addtoCart={addtoCart} resID={resID} />
                                 </li>
                             </Fade>
                         );
@@ -164,7 +203,7 @@ const RestarauntDetail = props => {
                 </div>
                 <div className="row">
                     <RenderRest restaraunt={props.restaraunt} />
-                    <Menu dishes={props.dishes} />
+                    <Menu dishes={props.dishes} user={props.user} addtoCart={props.addtoCart} resID={props.restaraunt._id} placeOrder={props.placeOrder} />
                 </div>
             </div>
         );

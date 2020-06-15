@@ -4,6 +4,7 @@ import logger from "redux-logger";
 import { User } from "./User";
 import { Restaraunt } from "./Restaraunt";
 import { Dish } from "./Dishes";
+import { Cart } from "./Cart";
 import { createForms } from "react-redux-form";
 import { InitialFeedback, RegisterUserDetails, RegisterRestarauntDetails, addDishDetails } from "./forms";
 
@@ -14,6 +15,7 @@ export const storeConfig = () => {
             user: User,
             restaraunts: Restaraunt,
             dishes: Dish,
+            cart: Cart,
             ...createForms({ feedback: InitialFeedback }),
             ...createForms({ registeruser: RegisterUserDetails }),
             ...createForms({ registerres: RegisterRestarauntDetails }),

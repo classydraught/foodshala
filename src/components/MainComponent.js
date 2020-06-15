@@ -11,13 +11,13 @@ import AddRestaraunt from "./AddRestaraunt";
 import RestarauntLogin from "./RestarauntLogin";
 import RestProfile from './RestarauntProfile';
 import UserProfile from './UserProfile';
-import Cart from "./ShoppingCart";
 import AddDish from './AddDishComponent';
 import Orders from './ResOrders';
+import UserOrders from "./UserOrders";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt, addNewDish } from "../redux/ActionCreator";
+import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt, addNewDish, addtoCart, placeOrder } from "../redux/ActionCreator";
 import { actions } from "react-redux-form";
 
 
@@ -26,7 +26,8 @@ const mapStateToProps = state => {
     return {
         user: state.user,
         dishes: state.dishes,
-        restaraunts: state.restaraunts
+        restaraunts: state.restaraunts,
+        cart: state.cart
     };
 };
 
@@ -58,6 +59,9 @@ const mapDispatchToProps = dispatch => ({
     addNewDish: dish => {
         dispatch(addNewDish(dish))
     },
+    addtoCart: (dishId, resID) => {
+        dispatch(addtoCart(dishId, resID))
+    },
     resetUserDetails: () => {
         dispatch(actions.reset("registeruser"));
     },
@@ -66,8 +70,10 @@ const mapDispatchToProps = dispatch => ({
     },
     resetDishDetails: () => {
         dispatch(actions.reset("addDish"));
+    },
+    placeOrder: (dishes) => {
+        dispatch(placeOrder(dishes))
     }
-
 
 })
 
@@ -88,17 +94,20 @@ class Main extends Component {
         const RestarauntDetailId = ({ match }) => {
             return (
                 <RestarauntDetail
+                    user={this.props.user}
                     restaraunt={
                         this.props.restaraunts.restaraunts.filter(
                             restaraunt => restaraunt._id === match.params.resId
                         )[0]
                     }
+                    addtoCart={this.props.addtoCart}
                     isLoading={this.props.restaraunts.isLoading}
                     errMess={this.props.restaraunts.errMess}
                     dishes={this.props.dishes.dishes.filter(
                         dish => dish.resId === match.params.resId
                     )}
                     disheserrMess={this.props.dishes.errMess}
+                    placeOrder={this.props.placeOrder}
                 />
             );
         };
@@ -124,7 +133,7 @@ class Main extends Component {
                         <Route exact path="/resprofile" component={() => <RestProfile user={this.props.user} />} />
                         <Route exact path="/userprofile" component={() => <UserProfile user={this.props.user} />} />
                         <Route exact path="/adddish" component={() => <AddDish user={this.props.user} addNewDish={this.props.addNewDish} resetDishDetails={this.props.resetDishDetails} />} />
-                        <Route exact path="/cart" component={Cart} />
+                        <Route exact path="/userorders" component={() => <UserOrders user={this.props.user} />} />
                         <Route exact path="/resorders" component={Orders} />
                         <Redirect to="/home" />
                     </Switch>

@@ -349,6 +349,50 @@ export const addNewDishtoList = dish => ({
 });
 
 
+export const addtoCart = (localCart) => dispatch => {
+    dispatch(addDishtoCart(localCart));
+};
+export const addDishtoCart = (localCart) => ({
+    type: actionTypes.ADD_TO_CART,
+    payload: localCart
+});
+
+export const placeOrder = (dishes) => dispatch => {
+    var dishOrdered = [];
+    for (const x of dishes) {
+        dishOrdered.push(x._id);
+    }
+    const order = {
+        resId: dishes[0].resId,
+        Items: dishOrdered,
+    }
+    return fetch(baseUrl + "orders/createorder", {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("foodshalakey")
+        },
+        credentials: "same-origin"
+    })
+        .then(response => {
+            if (response.status === 200) {
+                alert("Order placed");
+                return response.json();
+            }
+            else {
+                alert("Order not placed")
+            }
+        })
+        .then(res => dispatch(addOrdertoUserOrder(res.orderplaced)))
+        .catch(err => alert("Order not placed"));
+}
+
+export const addOrdertoUserOrder = (order) => ({
+    type: actionTypes.ADD_ORDER_USER,
+    payload: order
+})
+
 
 
 

@@ -171,18 +171,8 @@ class Header extends Component {
 
                                                     }
                                                     <Divider />
-                                                    {this.props.user.UserData.accountType === "User" ? <DropdownItem>
-                                                        <Link
-                                                            to="/cart"
-                                                            style={{
-                                                                color: "#0b0704",
-                                                                textDecoration: "none"
-                                                            }}
-                                                        >
-                                                            <i className="fa fa-shopping-cart"></i>
-                                                       &nbsp;&nbsp;My cart
-                                                   </Link>
-                                                    </DropdownItem> : <DropdownItem>
+                                                    {this.props.user.UserData.accountType === "User" ? <span></span>
+                                                        : <DropdownItem>
                                                             <Link
                                                                 to="/adddish"
                                                                 style={{
@@ -197,7 +187,7 @@ class Header extends Component {
 
                                                     {this.props.user.UserData.accountType === "User" ? <DropdownItem>
                                                         <Link
-                                                            to="/cart"
+                                                            to="/userorders"
                                                             style={{
                                                                 color: "#0b0704",
                                                                 textDecoration: "none"

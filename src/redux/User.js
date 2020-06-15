@@ -50,6 +50,13 @@ export const User = (
                     ...state.UserData, dishes: state.UserData.dishes.concat(action.payload)
                 }
             }
+        case actionTypes.ADD_ORDER_USER:
+            return {
+                ...state,
+                UserData: {
+                    ...state.UserData, userorders: state.UserData.userorders.concat(action.payload)
+                }
+            }
         default:
             return state;
     }

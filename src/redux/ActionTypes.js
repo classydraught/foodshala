@@ -10,3 +10,7 @@ export const ADD_DISHES = "ADD_DISHES";
 export const DISHES_LOADING = "DISHES_LOADING";
 export const DISHES_FAILED = "DISHES_FAILED";
 export const ADD_NEW_DISH = "ADD_NEW_DISH";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const DELETE_FROM_CART = "DELETE_FROM_CART";
+export const CLEAR_CART = "CLEAR_CART";
+export const ADD_ORDER_USER = "ADD_ORDER_USER";
