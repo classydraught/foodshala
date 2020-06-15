@@ -18,8 +18,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { Loading } from "./LoadingComponent";
+import { Loading, OrderLoading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
+
 
 
 const useStyles = makeStyles(() => ({
@@ -51,14 +52,12 @@ function RenderRest({ restaraunt }) {
                     <CardImg top src={baseUrl + restaraunt.image} alt={restaraunt.resname} />
                     <CardBody>
                         <CardTitle>{restaraunt.resname}</CardTitle>
-
                         <Rating
                             name="read-only"
                             value="4.5"
                             readOnly
                             precision={0.1}
                         />
-
                         <CardText>{restaraunt.description}</CardText>
                     </CardBody>
                 </div>
@@ -88,7 +87,7 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
                     </CardContent>
                     <div>
                         <h6 className="ml-3">{item.price} /-</h6>
-                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3">Buy</button> : <span></span>}
+                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <span></span>}
                         {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => addDishlocal(usrdishes.concat(item))}><i className="fa fa-shopping-basket"></i></button> : <span></span>}
                     </div>
                 </div>
@@ -100,7 +99,7 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
         );
     }
     var [isModalOpen, toggleModal] = useState(false);
-
+    var [isPurModalOpen, togglePurModal] = useState(false);
     var total = 0;
     const obj = {};
     usrdishes.map(val => {
@@ -111,6 +110,20 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
     }
     );
     return (<div className="col-12 col-md-5 ">
+
+        <Modal isOpen={isPurModalOpen} toggle={() => togglePurModal(!isPurModalOpen)} >
+            <ModalHeader toggle={() => togglePurModal(!isPurModalOpen)} className="login-modal">Order being placed</ModalHeader>
+
+            <ModalBody>
+                <div className="container h-100">
+                    <div className="row">
+                        <div className="col-12" style={{ marginLeft: "33%" }}>
+                            <OrderLoading />
+                        </div>
+                    </div>
+                </div>
+            </ModalBody>
+        </Modal>
 
         <Modal isOpen={isModalOpen} toggle={() => toggleModal(!isModalOpen)} >
             <ModalHeader toggle={() => toggleModal(!isModalOpen)} className="login-modal">Place Order</ModalHeader>
@@ -123,7 +136,7 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
                     }
                     <span> Total bill &emsp;&emsp;:   <span className="mt-3 ml-5">{total}</span></span>
                     <br />
-                    <button className="btn btn-dark m-md-5 mt-3 mr-3" onClick={() => { placeOrder(usrdishes); toggleModal(!isModalOpen); addDishlocal((usrdishes = [])) }}>Place order</button>
+                    <button className="btn btn-dark m-md-5 mt-3 mr-3" onClick={() => { placeOrder(usrdishes); toggleModal(!isModalOpen); togglePurModal(!isPurModalOpen); addDishlocal((usrdishes = [])) }}>Place order</button>
                     <button className="btn btn-dark m-md-5 mt-3" onClick={() => addDishlocal((usrdishes = []))}>Clear cart</button>
                 </div>
                 }
@@ -147,7 +160,6 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
                 </Stagger>
             </ul>
         </Stagger>
-
     </div>)
 
 }
