@@ -66,15 +66,8 @@ function RenderRest({ restaraunt }) {
     );
 }
 
-
-
 const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
-
-
     var [usrdishes, addDishlocal] = useState([]);
-
-
-
     function ItemCard({ item, user }) {
         const classes = useStyles();
         return (
@@ -112,23 +105,22 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
     return (<div className="col-12 col-md-5 ">
 
         <Modal isOpen={isPurModalOpen} toggle={() => togglePurModal(!isPurModalOpen)} >
-            <ModalHeader toggle={() => togglePurModal(!isPurModalOpen)} className="login-modal">Order being placed</ModalHeader>
 
             <ModalBody>
                 <div className="container h-100">
-                    <div className="row">
-                        <div className="col-12" style={{ marginLeft: "33%" }}>
+                    <div className="row d-block text-center">
+                        <h3 className="mt-5" style={{ fontFamily: "Montserrat" }}>order being placed</h3>
+                        <div className="col-12" style={{ marginLeft: "35%", marginTop: "20%", marginBottom: "30%" }}>
                             <OrderLoading />
                         </div>
                     </div>
                 </div>
             </ModalBody>
         </Modal>
-
         <Modal isOpen={isModalOpen} toggle={() => toggleModal(!isModalOpen)} >
             <ModalHeader toggle={() => toggleModal(!isModalOpen)} className="login-modal">Place Order</ModalHeader>
             <ModalBody>
-                {usrdishes.length === 0 ? <div>No item selected</div> : <div>
+                {usrdishes.length === 0 ? <div><img src="https://cdn.dribbble.com/users/1085743/screenshots/4005051/1.png" className="img-fluid" alt="empty cart" /></div> : <div>
                     {
                         Object.entries(obj).map(item =>
                             <div>{item[1].name} x {item[1].items} <span className="m-3"></span> : &emsp; {item[1].price}</div>

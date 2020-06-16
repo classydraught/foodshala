@@ -13,7 +13,7 @@ export const Loading = () => {
 export const OrderLoading = () => {
     return (
         <div className="col-12">
-            <MetroSpinner size={50} color="#16161d" />
+            <MetroSpinner size={60} color="#16161d" />
         </div>
     );
 };
