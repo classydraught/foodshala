@@ -17,7 +17,7 @@ import UserOrders from "./UserOrders";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt, addNewDish, addtoCart, placeOrder } from "../redux/ActionCreator";
+import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt, addNewDish, addtoCart, placeOrder, addTofav } from "../redux/ActionCreator";
 import { actions } from "react-redux-form";
 
 
@@ -61,6 +61,9 @@ const mapDispatchToProps = dispatch => ({
     },
     addtoCart: (dishId, resID) => {
         dispatch(addtoCart(dishId, resID))
+    },
+    addTofav: (resId) => {
+        dispatch(addTofav(resId))
     },
     resetUserDetails: () => {
         dispatch(actions.reset("registeruser"));
@@ -125,7 +128,7 @@ class Main extends Component {
                         <Route exact path="/home" component={Home} />
                         <Route exact path="/aboutus" component={Aboutus} />
                         <Route exact path="/contactus" component={Contact} />
-                        <Route exact path="/restaraunts" component={() => <RestarauntsList restaraunts={this.props.restaraunts} user={this.props.user} />} />
+                        <Route exact path="/restaraunts" component={() => <RestarauntsList restaraunts={this.props.restaraunts} user={this.props.user} addTofav={this.props.addTofav} />} />
                         <Route path="/restaraunts/:resId" component={RestarauntDetailId} />
                         <Route exact path="/addrestaraunt" component={() => <AddRestaraunt resetRestarauntDetails={this.props.resetRestarauntDetails} addNewRestaraunt={this.props.addNewRestaraunt} />} />
                         <Route exact path="/register" component={() => <RegisterUser resetUserDetails={this.props.resetUserDetails} />} />

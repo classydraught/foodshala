@@ -43,6 +43,13 @@ export const User = (
                 errMess: null,
                 UserData: {}
             }
+        case actionTypes.ADD_TO_FAV:
+            return {
+                ...state,
+                UserData: {
+                    ...state.UserData, favourites: state.UserData.favourites.concat(action.payload)
+                }
+            }
         case actionTypes.ADD_NEW_DISH:
             return {
                 ...state,

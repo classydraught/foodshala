@@ -41,12 +41,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function RenderRestaraunt({ rest }) {
+function RenderRestaraunt({ rest, addTofav, user }) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+    const favlist = []
+    if (user.LoggedIn && user.UserData.accountType === "User") {
+        user.UserData.favourites.map(item => favlist.push(item._id));
+        console.log(favlist)
+    }
     return (
         <Card className="profile-coursecard mt-1 mb-2 ">
             <Link to={`restaraunts/${rest._id}`}>
@@ -63,12 +68,9 @@ function RenderRestaraunt({ rest }) {
                 <CardMedia className={classes.media} image={baseUrl + rest.image} />
             </Link>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <i className="fa fa-heart"></i>
-                </IconButton>
-                <IconButton aria-label="share">
-                    <i className="fa fa-share-square"></i>
-                </IconButton>
+                {(user.LoggedIn && user.UserData.accountType === "User") ? <IconButton aria-label="add to favorites">
+                    {favlist.includes(rest._id) ? <i className="fa fa-heart" ></i> : <i className="fa fa-heart-o" onClick={() => addTofav(rest._id)}></i>}
+                </IconButton> : <span></span>}
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded
@@ -91,7 +93,6 @@ function RenderRestaraunt({ rest }) {
 
 
 const RestarauntsList = (props) => {
-
     const restarnatCatalog = props.restaraunts.restaraunts.map(rest => {
         return (
             <div key={rest._id} className="col-12 col-md-5 m-1">
@@ -101,7 +102,7 @@ const RestarauntsList = (props) => {
                         exitTransform: "scale(0.2) translateY(-20%)"
                     }}
                 >
-                    <RenderRestaraunt rest={rest} />
+                    <RenderRestaraunt rest={rest} addTofav={props.addTofav} user={props.user} />
                 </FadeTransform>
             </div>
         );

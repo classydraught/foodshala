@@ -27,42 +27,47 @@ class RegisterUser extends Component {
     handleSubmit(values) {
         let form_data = new FormData();
 
-        form_data.append(
-            "profileImage",
-            values.profileImage[0],
-            values.profileImage.name
-        );
+        if (values.profileImage[0].type === "image/jpeg" || values.profileImage[0].type === "image/png" || values.profileImage[0].type === "image/jpg") {
+            form_data.append(
+                "profileImage",
+                values.profileImage[0],
+                values.profileImage.name
+            );
 
-        form_data.append("name", values.username);
-        form_data.append("email", values.email);
-        form_data.append("password", values.password);
-        form_data.append("phone", parseInt(values.phone));
-        form_data.append("preference", values.preference);
-        let url = baseUrl + "user/signup";
-        axios
-            .post(url, form_data, {
-                headers: {
-                    "content-type": "multipart/form-data"
-                }
-            })
-            .then(
-                response => {
-                    if (response.status === 201) {
-                        alert("User created");
-                    } else {
-                        var error = new Error(
-                            "Error " + response.status + ": " + response.statusText
-                        );
-                        error.response = response;
+            form_data.append("name", values.username);
+            form_data.append("email", values.email);
+            form_data.append("password", values.password);
+            form_data.append("phone", parseInt(values.phone));
+            form_data.append("preference", values.preference);
+            let url = baseUrl + "user/signup";
+            axios
+                .post(url, form_data, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    }
+                })
+                .then(
+                    response => {
+                        if (response.status === 201) {
+                            alert("User created");
+                        } else {
+                            var error = new Error(
+                                "Error " + response.status + ": " + response.statusText
+                            );
+                            error.response = response;
+                            throw error;
+                        }
+                    },
+                    error => {
                         throw error;
                     }
-                },
-                error => {
-                    throw error;
-                }
-            )
-            .catch(err => alert("User not created check email ID or phone" + err));
-        this.props.resetUserDetails();
+                )
+                .catch(err => alert("User not created check email ID or phone" + err));
+            this.props.resetUserDetails();
+        }
+        else {
+            alert("Please select JPEG/PNG file only");
+        }
     }
     render() {
         return (<div className="container mb-5">

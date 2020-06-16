@@ -18,46 +18,51 @@ const minLength = length => value => value && value.length >= length;
 
 function handleSubmit(values, resetDishDetails, addNewDish) {
     let form_data = new FormData();
-    form_data.append(
-        "dishImage",
-        values.dishImage[0],
-        values.dishImage.name
-    );
-    form_data.append("name", values.name);
-    form_data.append("price", parseInt(values.price));
-    form_data.append("featured", values.featured);
-    form_data.append("category", values.category);
-    form_data.append("vegan", values.vegan);
-    let url = baseUrl + "dishes/createdish";
-    axios
-        .post(url, form_data, {
-            headers: {
-                "content-type": "multipart/form-data",
-                "Authorization": "Bearer " + localStorage.getItem("foodshalareskey")
-            }
-        })
-        .then(
-            response => {
-                if (response.status === 201) {
-                    alert("Dish Created");
-                    addNewDish(response.data.result);
-                } else {
-                    var error = new Error(
-                        "Error " + response.status + ": " + response.statusText
-                    );
-                    error.response = response;
+    if (values.dishImage[0].type === "image/jpeg" || values.dishImage[0].type === "image/png" || values.dishImage[0].type === "image/jpg") {
+        form_data.append(
+            "dishImage",
+            values.dishImage[0],
+            values.dishImage.name
+        );
+        form_data.append("name", values.name);
+        form_data.append("price", parseInt(values.price));
+        form_data.append("featured", values.featured);
+        form_data.append("category", values.category);
+        form_data.append("vegan", values.vegan);
+        let url = baseUrl + "dishes/createdish";
+        axios
+            .post(url, form_data, {
+                headers: {
+                    "content-type": "multipart/form-data",
+                    "Authorization": "Bearer " + localStorage.getItem("foodshalareskey")
+                }
+            })
+            .then(
+                response => {
+                    if (response.status === 201) {
+                        alert("Dish Created");
+                        addNewDish(response.data.result);
+                    } else {
+                        var error = new Error(
+                            "Error " + response.status + ": " + response.statusText
+                        );
+                        error.response = response;
+                        throw error;
+                    }
+                },
+                error => {
                     throw error;
                 }
-            },
-            error => {
-                throw error;
+            )
+            .catch(err => {
+                alert("Dish not created")
             }
-        )
-        .catch(err => {
-            alert("Dish not created")
-        }
-        );
-    resetDishDetails();
+            );
+        resetDishDetails();
+    }
+    else {
+        alert("Please select only Jpeg/png file only");
+    }
 
 }
 

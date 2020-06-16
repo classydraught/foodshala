@@ -41,8 +41,8 @@ export const loginUser = (email, password) => dispatch => {
                     response.image,
                     response.orders,
                     response.accountType,
-                    response.favourites,
                     response.preference,
+                    response.favourites,
                     response.phone
                 )
             );
@@ -111,8 +111,8 @@ export const alreadyLoggedin = () => dispatch => {
                     response.image,
                     response.orders,
                     response.accountType,
-                    response.favourites,
                     response.preference,
+                    response.favourites,
                     response.phone
                 )
             );
@@ -392,6 +392,32 @@ export const addOrdertoUserOrder = (order) => ({
     payload: order
 })
 
+export const addTofav = (resID) => dispatch => {
+    const body = {
+        resId: resID,
+    }
+    return fetch(baseUrl + "user/addfav", {
+        method: "PATCH",
+        body: JSON.stringify(body),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("foodshalakey")
+        },
+        credentials: "same-origin"
+    })
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+            else if (response.status === 409) {
+                return response.json();
+            }
+        })
+        .then(res => dispatch(addFavtoState(res.rest)))
+        .catch(err => { console.log(err); alert("Favourite not added") });
+}
 
-
-
+export const addFavtoState = (fav) => ({
+    type: actionTypes.ADD_TO_FAV,
+    payload: fav
+})

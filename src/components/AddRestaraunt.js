@@ -27,48 +27,54 @@ class AddRestaraunt extends Component {
     }
     handleSubmit(values) {
         let form_data = new FormData();
-        form_data.append(
-            "resImage",
-            values.resImage[0],
-            values.resImage.name
-        );
-        form_data.append("resname", values.resname);
-        form_data.append("ownername", values.ownername);
-        form_data.append("phone", values.phone);
-        form_data.append("email", values.email);
-        form_data.append("password", values.password);
-        form_data.append("style", values.style);
-        form_data.append("address", values.address);
-        form_data.append("description", values.description);
-        let url = baseUrl + "restaraunt/signup";
-        axios
-            .post(url, form_data, {
-                headers: {
-                    "content-type": "multipart/form-data"
-                }
-            })
-            .then(
-                response => {
-                    if (response.status === 201) {
-                        alert("Restaraunt created");
-                        this.props.addNewRestaraunt(response.data);
-                    } else {
-                        var error = new Error(
-                            "Error " + response.status + ": " + response.statusText
-                        );
-                        error.response = response;
+        if (values.resImage[0].type === "image/jpeg" || values.resImage[0].type === "image/png" || values.resImage[0].type === "image/jpg") {
+
+            form_data.append(
+                "resImage",
+                values.resImage[0],
+                values.resImage.name
+            );
+            form_data.append("resname", values.resname);
+            form_data.append("ownername", values.ownername);
+            form_data.append("phone", values.phone);
+            form_data.append("email", values.email);
+            form_data.append("password", values.password);
+            form_data.append("style", values.style);
+            form_data.append("address", values.address);
+            form_data.append("description", values.description);
+            let url = baseUrl + "restaraunt/signup";
+            axios
+                .post(url, form_data, {
+                    headers: {
+                        "content-type": "multipart/form-data"
+                    }
+                })
+                .then(
+                    response => {
+                        if (response.status === 201) {
+                            alert("Restaraunt created");
+                            this.props.addNewRestaraunt(response.data);
+                        } else {
+                            var error = new Error(
+                                "Error " + response.status + ": " + response.statusText
+                            );
+                            error.response = response;
+                            throw error;
+                        }
+                    },
+                    error => {
                         throw error;
                     }
-                },
-                error => {
-                    throw error;
+                )
+                .catch(err => {
+                    alert("Restaraunt not created check email ID or phone")
                 }
-            )
-            .catch(err => {
-                alert("Restaraunt not created check email ID or phone")
-            }
-            );
-        this.props.resetRestarauntDetails();
+                );
+            this.props.resetRestarauntDetails();
+        }
+        else {
+            alert("Please select only jpeg/png file only");
+        }
     }
     render() {
         return (<div className="container mb-5">

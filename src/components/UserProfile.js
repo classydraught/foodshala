@@ -70,7 +70,7 @@ function Profile(props) {
                         </FadeTransform>
                     </div>
                     <div className="col-12 col-md-8 my-3 ">
-                        <h3 className="text-center">My favorites</h3>
+                        <h3 className="text-center">My favourites</h3>
                         <Divider className="mb-3" />
                         <div className="row">
 
