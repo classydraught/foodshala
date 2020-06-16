@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
 import { FadeTransform } from "react-animation-components";
@@ -58,7 +58,7 @@ function RenderCard({ item }) {
                 exitTransform: "scale(0.2) translateY(-20%)",
             }}
         >
-            <Card className="profile-coursecard my-3">
+            <Card className="profile-coursecard">
                 <CardHeader
                     avatar={
                         <Avatar
@@ -70,9 +70,7 @@ function RenderCard({ item }) {
                     }
                     title={item.userId.name}
                 />
-                <Link to={`restaraunts/${item.resId._id}`}>
-                    <CardMedia className={classes.media} image={baseUrl + item.Items[0].image} />
-                </Link>
+                <CardMedia className={classes.media} image={baseUrl + item.Items[0].image} />
                 <CardContent>
                     <Typography
                         variant="body2"
@@ -97,18 +95,24 @@ function RenderCard({ item }) {
                     </IconButton>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
+
                     <CardContent>
-                        Status : {item.status}
-                        <br />
-                        Ordered by : {item.userId.name}
-                        <br />
-                        User Email : {item.userId.email}
-                        <br />
-                        User contact No : {item.userId.phone}
-                        <br />
-                        {Object.entries(obj).map(item =>
-                            <div>{item[1].name} x {item[1].items} <span className="m-3"></span> : &emsp; {item[1].price}</div>
-                        )}
+                        <dl className="row p-1">
+                            <dt className="col-5">Status</dt> <dd className="col-7">{item.status}</dd>
+
+                            <dt className="col-5">Ordered by</dt> <dd className="col-7">{item.userId.name}</dd>
+
+                            <dt className="col-5">Email</dt> <dd className="col-7"> {item.userId.email}</dd>
+
+                            <dt className="col-5">Contact No</dt><dd className="col-7">{item.userId.phone}</dd>
+                            <dt className="col-12 my-2">Ordered items</dt>
+                            {
+                                Object.entries(obj).map(item =>
+                                    <> <dt className="col-7">{item[1].name} x {item[1].items} </dt> <dd className="col-5">{item[1].price}</dd></>
+                                )
+                            }
+                        </dl>
+
                     </CardContent>
                 </Collapse>
 
@@ -138,7 +142,7 @@ function Orders(props) {
                     <div className="row">
                         {
                             props.user.UserData.resorders.map(order =>
-                                <div className="col-md-3 col-12">
+                                <div className="col-md-4 col-12">
                                     <div >
                                         <RenderCard item={order} />
                                     </div>

@@ -98,19 +98,17 @@ function RenderCard({ item }) {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        {Object.entries(obj).map(item =>
-                            <div>{item[1].name} x {item[1].items} <span className="m-3"></span> : &emsp; {item[1].price}</div>
-                        )}
+                        <dl className="row p-1">
+                            {Object.entries(obj).map(item =>
+                                <><dt className="col-8">{item[1].name} x {item[1].items}</dt> <dd className="col-4">{item[1].price}</dd></>
+                            )}
+                        </dl>
                     </CardContent>
                 </Collapse>
 
             </Card>
         </FadeTransform>)
 }
-
-
-
-
 
 function UserOrders(props) {
     if (props.user.isLoading) {

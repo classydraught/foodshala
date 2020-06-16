@@ -52,13 +52,13 @@ function About(props) {
                         <CardBody>
                             <dl className="row p-1">
                                 <dt className="col-6">Started</dt>
-                                <dd className="col-6">3 Feb. 2019</dd>
+                                <dd className="col-6">3 Feb. 2020</dd>
                                 <dt className="col-6">Major Stake Holder</dt>
-                                <dd className="col-6">Synxa IT. PVT LTD.</dd>
-                                <dt className="col-6">Last Year's Turnover</dt>
-                                <dd className="col-6">$1,250,37</dd>
-                                <dt className="col-6">Employees</dt>
-                                <dd className="col-6">40</dd>
+                                <dd className="col-6">Internshala</dd>
+                                <dt className="col-6">Orders served till now</dt>
+                                <dd className="col-6">100</dd>
+                                <dt className="col-6">Total customers</dt>
+                                <dd className="col-6">30</dd>
                             </dl>
                         </CardBody>
                     </Card>

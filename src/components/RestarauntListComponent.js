@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
 
 
 function RenderRestaraunt({ rest, addTofav, user }) {
+    console.log(rest);
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {
@@ -71,6 +72,7 @@ function RenderRestaraunt({ rest, addTofav, user }) {
                 {(user.LoggedIn && user.UserData.accountType === "User") ? <IconButton aria-label="add to favorites">
                     {favlist.includes(rest._id) ? <i className="fa fa-heart" ></i> : <i className="fa fa-heart-o" onClick={() => addTofav(rest._id)}></i>}
                 </IconButton> : <span></span>}
+                {rest.style === "vegan" ? <span class="badge badge-pill badge-success">100% veg</span> : <span></span>}
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded

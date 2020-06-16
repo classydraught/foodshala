@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from "../shared/baseUrl";
 
 class Contact extends Component {
 
@@ -10,7 +11,7 @@ class Contact extends Component {
         this.state = {
             firstname: '',
             lastname: '',
-            telnum: '',
+            phone: '',
             email: '',
             agree: false,
             contactType: 'Tel.',
@@ -18,7 +19,7 @@ class Contact extends Component {
             touched: {
                 firstname: false,
                 lastname: false,
-                telnum: false,
+                phone: false,
 
             }
         };
@@ -36,11 +37,11 @@ class Contact extends Component {
         });
     }
 
-    validate(firstname, lastname, telnum, email) {
+    validate(firstname, lastname, phone, email) {
         const errors = {
             firstname: '',
             lastname: '',
-            telnum: '',
+            phone: '',
             email: ''
         };
 
@@ -55,8 +56,8 @@ class Contact extends Component {
             errors.lastname = 'Last Name should be <= 10 characters';
 
         const reg = /^\d+$/;
-        if (this.state.touched.telnum && !reg.test(telnum))
-            errors.telnum = 'Tel. Number should contain only numbers';
+        if (this.state.touched.phone && !reg.test(phone))
+            errors.phone = 'Tel. Number should contain only numbers';
 
         if (this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
             errors.email = 'Email should contain a @';
@@ -78,13 +79,30 @@ class Contact extends Component {
 
     handleSubmit(event) {
         console.log('Current State is: ' + JSON.stringify(this.state));
-        alert('Current State is: ' + JSON.stringify(this.state));
+        fetch(baseUrl + "enquiry", {
+            method: "POST",
+            body: JSON.stringify(this.state),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "same-origin"
+        })
+            .then(response => {
+                if (response.status === 201) {
+                    alert("Enquiry submitted");
+                }
+                else {
+                    alert("Enquiry Failed");
+                }
+            })
+            .catch(err => alert("Enquiry failed"))
+
         event.preventDefault();
     }
 
 
     render() {
-        const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
+        const errors = this.validate(this.state.firstname, this.state.lastname, this.state.phone, this.state.email);
 
         return (
             <div className="container mb-5">
@@ -167,16 +185,16 @@ class Contact extends Component {
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
+                                <Label htmlFor="phone" md={2}>Contact Tel.</Label>
                                 <Col md={10}>
-                                    <Input type="tel" id="telnum" name="telnum"
+                                    <Input type="tel" id="phone" name="phone"
                                         placeholder="Tel. Number"
-                                        value={this.state.telnum}
-                                        valid={errors.telnum === ''}
-                                        invalid={errors.telnum !== ''}
-                                        onBlur={this.handleBlur('telnum')}
+                                        value={this.state.phone}
+                                        valid={errors.phone === ''}
+                                        invalid={errors.phone !== ''}
+                                        onBlur={this.handleBlur('phone')}
                                         onChange={this.handleInputChange} />
-                                    <FormFeedback>{errors.telnum}</FormFeedback>
+                                    <FormFeedback>{errors.phone}</FormFeedback>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>

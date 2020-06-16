@@ -66,13 +66,11 @@ function ItemCard({ item }) {
         <Card className={classes.root}>
             <div className={classes.details}>
                 <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5">
+                    <Typography component="h6" variant="h6">
                         {item.name}
                     </Typography>
                 </CardContent>
-                <div>
-                    <h6 className="ml-3">{item.price} /-</h6>
-                </div>
+                <span className="m-3">Price : {item.price} /- &nbsp;{item.vegan ? <span class="badge badge-pill badge-success">100% veg</span> : <span></span>}{item.featured ? <span class="badge badge-pill badge-warning mx-3">featured</span> : <span></span>}</span>
             </div>
             <CardMedia
                 className={classes.cover}

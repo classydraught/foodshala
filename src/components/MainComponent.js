@@ -132,7 +132,7 @@ class Main extends Component {
                         <Route path="/restaraunts/:resId" component={RestarauntDetailId} />
                         <Route exact path="/addrestaraunt" component={() => <AddRestaraunt resetRestarauntDetails={this.props.resetRestarauntDetails} addNewRestaraunt={this.props.addNewRestaraunt} />} />
                         <Route exact path="/register" component={() => <RegisterUser resetUserDetails={this.props.resetUserDetails} />} />
-                        <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} />} />
+                        <Route exact path="/reslogin" component={() => <RestarauntLogin resLogin={this.props.resLogin} user={this.props.user} />} />
                         <Route exact path="/resprofile" component={() => <RestProfile user={this.props.user} />} />
                         <Route exact path="/userprofile" component={() => <UserProfile user={this.props.user} />} />
                         <Route exact path="/adddish" component={() => <AddDish user={this.props.user} addNewDish={this.props.addNewDish} resetDishDetails={this.props.resetDishDetails} />} />

@@ -2,6 +2,7 @@ import * as actionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
 export const loginUser = (email, password) => dispatch => {
+    dispatch(UserLoading(true));
     const loginUser = {
         email: email,
         password: password
@@ -133,6 +134,7 @@ export const FailedUserLogin = () => ({
 
 
 export const resLogin = (email, password) => dispatch => {
+    dispatch(UserLoading(true));
     const loginUser = {
         email: email,
         password: password
@@ -179,7 +181,6 @@ export const resLogin = (email, password) => dispatch => {
                     response.address
                 )
             );
-            window.location = "/resprofile";
         })
         .catch(error => {
             alert("Wrong Credentials/ Kindly check email or password");

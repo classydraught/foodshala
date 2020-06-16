@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Divider } from '@material-ui/core';
 import {
-
+    Modal,
+    ModalBody,
     Row,
     Col,
     Button
@@ -9,6 +10,7 @@ import {
 import axios from "axios";
 import { baseUrl } from "../shared/baseUrl";
 import { Control, Form, Errors } from "react-redux-form";
+import { OrderLoading } from "./LoadingComponent";
 
 
 const required = value => value && value.length;
@@ -23,12 +25,21 @@ const validEmail = value =>
 class AddRestaraunt extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isModalOpen: false
+        }
+        this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
     }
     handleSubmit(values) {
         let form_data = new FormData();
         if (values.resImage[0].type === "image/jpeg" || values.resImage[0].type === "image/png" || values.resImage[0].type === "image/jpg") {
-
+            this.toggleModal();
             form_data.append(
                 "resImage",
                 values.resImage[0],
@@ -53,6 +64,7 @@ class AddRestaraunt extends Component {
                     response => {
                         if (response.status === 201) {
                             alert("Restaraunt created");
+                            this.toggleModal();
                             this.props.addNewRestaraunt(response.data);
                         } else {
                             var error = new Error(
@@ -78,6 +90,18 @@ class AddRestaraunt extends Component {
     }
     render() {
         return (<div className="container mb-5">
+            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+                <ModalBody>
+                    <div className="container h-100">
+                        <div className="row d-block text-center">
+                            <h3 className="mt-5" style={{ fontFamily: "Montserrat" }}>Hold on fella!</h3>
+                            <div className="col-12" style={{ marginLeft: "35%", marginTop: "20%", marginBottom: "30%" }}>
+                                <OrderLoading />
+                            </div>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
             <div className="row h-100 justify-content-center align-items-center mt-3">
                 <div className="col-md-4 d-md-block d-none">
                     <img alt="register-img-1" src="assets/foodregister6.png" className="img-fluid" />

@@ -74,13 +74,14 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
             <Card className={classes.root}>
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
-                        <Typography component="h5" variant="h5">
+                        <Typography component="h6" variant="h6" style={{ fontFamily: "Montserrat" }}>
                             {item.name}
                         </Typography>
+                        {item.featured ? <span class="badge badge-pill badge-warning mr-3">Must try</span> : <span></span>}{item.vegan ? <span class="badge badge-pill badge-success">100% veg</span> : <span></span>}
                     </CardContent>
                     <div>
-                        <h6 className="ml-3">{item.price} /-</h6>
-                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <span></span>}
+                        <p className="ml-3 p-0 mb-0">{item.price} /-</p>
+                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <span></span>}
                         {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => addDishlocal(usrdishes.concat(item))}><i className="fa fa-shopping-basket"></i></button> : <span></span>}
                     </div>
                 </div>
@@ -105,7 +106,6 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
     return (<div className="col-12 col-md-5 ">
 
         <Modal isOpen={isPurModalOpen} toggle={() => togglePurModal(!isPurModalOpen)} >
-
             <ModalBody>
                 <div className="container h-100">
                     <div className="row d-block text-center">
@@ -120,13 +120,16 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
         <Modal isOpen={isModalOpen} toggle={() => toggleModal(!isModalOpen)} >
             <ModalHeader toggle={() => toggleModal(!isModalOpen)} className="login-modal">Place Order</ModalHeader>
             <ModalBody>
-                {usrdishes.length === 0 ? <div><img src="https://cdn.dribbble.com/users/1085743/screenshots/4005051/1.png" className="img-fluid" alt="empty cart" /></div> : <div>
-                    {
-                        Object.entries(obj).map(item =>
-                            <div>{item[1].name} x {item[1].items} <span className="m-3"></span> : &emsp; {item[1].price}</div>
-                        )
-                    }
-                    <span> Total bill &emsp;&emsp;:   <span className="mt-3 ml-5">{total}</span></span>
+                {usrdishes.length === 0 ? <div><img src="https://cdn.dribbble.com/users/1085743/screenshots/4005051/1.png" className="img-fluid" alt="empty cart" /></div> : <div className="">
+                    <h4>Cart value</h4>
+                    <dl className="row p-1">
+                        {
+                            Object.entries(obj).map(item =>
+                                <>  <dt className="col-6">{item[1].name} x {item[1].items} </dt> <dd className="col-6">{item[1].price}</dd></>
+                            )
+                        }
+                        <dt className="col-6">Total bill : </dt> <dd className="col-6">{total}</dd>
+                    </dl>
                     <br />
                     <button className="btn btn-dark m-md-5 mt-3 mr-3" onClick={() => { placeOrder(usrdishes); toggleModal(!isModalOpen); togglePurModal(!isPurModalOpen); addDishlocal((usrdishes = [])) }}>Place order</button>
                     <button className="btn btn-dark m-md-5 mt-3" onClick={() => addDishlocal((usrdishes = []))}>Clear cart</button>
@@ -152,7 +155,7 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
                 </Stagger>
             </ul>
         </Stagger>
-    </div>)
+    </div >)
 
 }
 

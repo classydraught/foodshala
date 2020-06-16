@@ -27,6 +27,7 @@ import {
 import Avatar from "@material-ui/core/Avatar";
 import { baseUrl } from "../shared/baseUrl";
 import { Divider } from '@material-ui/core';
+import { OrderLoading } from "./LoadingComponent"
 
 
 
@@ -38,6 +39,7 @@ class Header extends Component {
             isNavOpen: false,
             isModalOpen: false,
             isdropdownOpen: false,
+            isloginModalOpen: false,
             headingtext: "Hungry ?"
         };
         this.toggleNav = this.toggleNav.bind(this);
@@ -62,7 +64,6 @@ class Header extends Component {
             isdropdownOpen: !this.state.isdropdownOpen
         });
     }
-
     handleLogin(event) {
         event.preventDefault();
         this.toggleModal();
@@ -79,10 +80,21 @@ class Header extends Component {
     }
 
     render() {
-
         return (
             <>
                 <div>
+                    <Modal isOpen={this.props.user.isLoading} >
+                        <ModalBody>
+                            <div className="container h-100">
+                                <div className="row d-block text-center">
+                                    <h3 className="mt-5" style={{ fontFamily: "Montserrat" }}>User logging in</h3>
+                                    <div className="col-12" style={{ marginLeft: "35%", marginTop: "20%", marginBottom: "30%" }}>
+                                        <OrderLoading />
+                                    </div>
+                                </div>
+                            </div>
+                        </ModalBody>
+                    </Modal>
                     <Navbar dark expand="md" className="fixed-top">
                         <div className="container">
                             <NavbarToggler onClick={this.toggleNav} />
@@ -277,6 +289,7 @@ class Header extends Component {
                                 variant="outlined"
                                 className="mt-2"
                                 size="large"
+                            // onClick={this.toggleloginModal}
                             >
                                 <span className="fa fa-sign-in fa-lg"></span>
                             </Button>
