@@ -247,7 +247,6 @@ export const resLoggedin = (email, resname, ownername, id, image, resorders, acc
         resorders: resorders,
         accountType: accountType,
         style: style,
-        orders: resorders,
         phone: phone,
         address: address
     }

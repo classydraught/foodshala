@@ -80,7 +80,7 @@ function RenderCard({ item }) {
                         component="p"
                         className="text-center"
                     >
-                        {item.cost} Rs /-
+                        Total bill :  {item.cost} Rs /-
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>

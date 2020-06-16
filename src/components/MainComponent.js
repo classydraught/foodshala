@@ -134,7 +134,7 @@ class Main extends Component {
                         <Route exact path="/userprofile" component={() => <UserProfile user={this.props.user} />} />
                         <Route exact path="/adddish" component={() => <AddDish user={this.props.user} addNewDish={this.props.addNewDish} resetDishDetails={this.props.resetDishDetails} />} />
                         <Route exact path="/userorders" component={() => <UserOrders user={this.props.user} />} />
-                        <Route exact path="/resorders" component={Orders} />
+                        <Route exact path="/resorders" component={() => <Orders user={this.props.user} />} />
                         <Redirect to="/home" />
                     </Switch>
                 </CSSTransition>
