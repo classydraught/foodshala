@@ -5,6 +5,57 @@ import { FadeTransform } from "react-animation-components";
 import { Link, Redirect } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import Avatar from "@material-ui/core/Avatar";
+import { deepOrange, grey } from "@material-ui/core/colors";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        maxWidth: 345,
+    },
+    media: {
+        height: 0,
+        paddingTop: "56.25%", // 16:9
+    },
+
+    avatar: {
+        backgroundColor: deepOrange["A200"],
+        color: grey[900],
+    },
+}));
+
+function RenderCard({ item }) {
+    const classes = useStyles();
+
+
+    return (
+        <FadeTransform
+            in
+            transformProps={{
+                exitTransform: "scale(0.2) translateY(-20%)",
+            }}
+        >
+            <Card className="profile-coursecard my-3">
+                <CardHeader
+                    avatar={
+                        <Avatar
+                            aria-label="recipe"
+                            className={classes.avatar}
+                            src={baseUrl + item.image}
+                            alt="promotion"
+                        ></Avatar>
+                    }
+                    title={item.resname}
+                />
+                <Link to={`restaraunts/${item._id}`}>
+                    <CardMedia className={classes.media} image={baseUrl + item.image} />
+                </Link>
+            </Card>
+        </FadeTransform>)
+}
 
 
 
@@ -72,9 +123,11 @@ function Profile(props) {
                     <div className="col-12 col-md-8 my-3 ">
                         <h3 className="text-center">My favourites</h3>
                         <Divider className="mb-3" />
-                        <div className="row">
-
-                        </div>
+                        {props.user.LoggedIn ? <div className="row">
+                            {props.user.UserData.favourites.map(item =>
+                                <div className="col-md-4 col-12"> <RenderCard item={item} /> </div>
+                            )}
+                        </div> : <div className="row"><Loading /></div>}
                     </div>
                 </div>
             </div>
@@ -88,3 +141,4 @@ function Profile(props) {
 }
 
 export default Profile;
+

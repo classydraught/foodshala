@@ -134,7 +134,7 @@ function UserOrders(props) {
                     <div className="row">
                         {
                             props.user.UserData.userorders.map(order =>
-                                <div className="col-md-4 col-12">
+                                <div className="col-md-3 col-12">
                                     <div >
                                         <RenderCard item={order} />
                                     </div>
