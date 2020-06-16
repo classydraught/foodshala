@@ -3,7 +3,8 @@ import { Loading } from "./LoadingComponent";
 import { Redirect } from "react-router-dom";
 import { Divider } from '@material-ui/core';
 import {
-
+    Modal,
+    ModalBody,
     Row,
     Col,
     Button
@@ -11,62 +12,68 @@ import {
 import axios from "axios";
 import { baseUrl } from "../shared/baseUrl";
 import { Control, Form, Errors } from "react-redux-form";
+import { OrderLoading } from "./LoadingComponent";
+
+
 const required = value => value && value.length;
 const validphone = value => /^\d+$/.test(value);
 const maxLength = length => value => !value || value.length <= length;
 const minLength = length => value => value && value.length >= length;
 
-function handleSubmit(values, resetDishDetails, addNewDish) {
-    let form_data = new FormData();
-    if (values.dishImage[0].type === "image/jpeg" || values.dishImage[0].type === "image/png" || values.dishImage[0].type === "image/jpg") {
-        form_data.append(
-            "dishImage",
-            values.dishImage[0],
-            values.dishImage.name
-        );
-        form_data.append("name", values.name);
-        form_data.append("price", parseInt(values.price));
-        form_data.append("featured", values.featured);
-        form_data.append("category", values.category);
-        form_data.append("vegan", values.vegan);
-        let url = baseUrl + "dishes/createdish";
-        axios
-            .post(url, form_data, {
-                headers: {
-                    "content-type": "multipart/form-data",
-                    "Authorization": "Bearer " + localStorage.getItem("foodshalareskey")
-                }
-            })
-            .then(
-                response => {
-                    if (response.status === 201) {
-                        alert("Dish Created");
-                        addNewDish(response.data.result);
-                    } else {
-                        var error = new Error(
-                            "Error " + response.status + ": " + response.statusText
-                        );
-                        error.response = response;
-                        throw error;
-                    }
-                },
-                error => {
-                    throw error;
-                }
-            )
-            .catch(err => {
-                alert("Dish not created")
-            }
-            );
-        resetDishDetails();
-    }
-    else {
-        alert("Please select only Jpeg/png file only");
-    }
-
-}
 
 function AddDish(props) {
+    var [isModalOpen, toggleModal] = React.useState(false);
+    function handleSubmit(values, resetDishDetails, addNewDish) {
+
+        let form_data = new FormData();
+        if (values.dishImage[0].type === "image/jpeg" || values.dishImage[0].type === "image/png" || values.dishImage[0].type === "image/jpg") {
+            toggleModal(!isModalOpen);
+            form_data.append(
+                "dishImage",
+                values.dishImage[0],
+                values.dishImage.name
+            );
+            form_data.append("name", values.name);
+            form_data.append("price", parseInt(values.price));
+            form_data.append("featured", values.featured);
+            form_data.append("category", values.category);
+            form_data.append("vegan", values.vegan);
+            let url = baseUrl + "dishes/createdish";
+            axios
+                .post(url, form_data, {
+                    headers: {
+                        "content-type": "multipart/form-data",
+                        "Authorization": "Bearer " + localStorage.getItem("foodshalareskey")
+                    }
+                })
+                .then(
+                    response => {
+                        if (response.status === 201) {
+                            alert("Dish Created");
+                            addNewDish(response.data.result);
+                        } else {
+                            var error = new Error(
+                                "Error " + response.status + ": " + response.statusText
+                            );
+                            error.response = response;
+                            throw error;
+                        }
+                    },
+                    error => {
+                        throw error;
+                    }
+                )
+                .catch(err => {
+                    alert("Dish not created")
+                }
+                );
+            resetDishDetails();
+        }
+        else {
+            alert("Please select only Jpeg/png file only");
+        }
+
+    }
     if (props.user.isLoading) {
         return (
             <div className="container" style={{ height: "50vh" }}>
@@ -83,6 +90,18 @@ function AddDish(props) {
     }
     else if (localStorage.getItem("foodshalareskey"))
         return (<div className="container mb-5">
+            <Modal isOpen={isModalOpen} toggle={() => toggleModal(!isModalOpen)} >
+                <ModalBody>
+                    <div className="container h-100">
+                        <div className="row d-block text-center">
+                            <h3 className="mt-5" style={{ fontFamily: "Montserrat" }}>Adding your best dish</h3>
+                            <div className="col-12" style={{ marginLeft: "35%", marginTop: "20%", marginBottom: "30%" }}>
+                                <OrderLoading />
+                            </div>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
             <div className="row">
                 <div className="col-md-4 d-md-block d-none">
                 </div>

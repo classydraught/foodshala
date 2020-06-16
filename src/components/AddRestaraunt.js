@@ -64,7 +64,6 @@ class AddRestaraunt extends Component {
                     response => {
                         if (response.status === 201) {
                             alert("Restaraunt created");
-                            this.toggleModal();
                             this.props.addNewRestaraunt(response.data);
                         } else {
                             var error = new Error(
