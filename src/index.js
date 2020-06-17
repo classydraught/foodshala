@@ -13,7 +13,6 @@ const options = {
   timeout: 1200,
   offset: '30px',
   transition: transitions.SCALE,
-  type: 'success'
 }
 
 

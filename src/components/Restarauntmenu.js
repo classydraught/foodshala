@@ -83,8 +83,8 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
                     </CardContent>
                     <div>
                         <p className="ml-3 p-0 mb-0">{item.price} /-</p>
-                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <span></span>}
-                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => { addDishlocal(usrdishes.concat(item)); alert.show('Added to cart') }}><i className="fa fa-shopping-basket"></i></button> : <span></span>}
+                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { alert.show('Login as user to purchase') }}>Buy</button>}
+                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => { addDishlocal(usrdishes.concat(item)); alert.success('Added to cart') }}><i className="fa fa-shopping-basket"></i></button> : <button type="button" className="btn btn-outline-dark" onClick={() => { alert.show('Login as user to add to cart') }}><i className="fa fa-shopping-basket"></i></button>}
                     </div>
                 </div>
                 <CardMedia
