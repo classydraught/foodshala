@@ -111,7 +111,8 @@ function RenderCard({ item }) {
 }
 
 function UserOrders(props) {
-    if (props.user.isLoading) {
+    if (props.user.isLoading)
+    {
         return (<div className="container" style={{ height: "50vh" }}>
             <div className="row">
                 <div className="col-md-4 col-12">
@@ -124,7 +125,8 @@ function UserOrders(props) {
             </div>
         </div>)
     }
-    else if (localStorage.getItem("foodshalakey")) {
+    else if (localStorage.getItem("foodshalakey"))
+    {
         if (props.user.LoggedIn)
 
             return (
@@ -143,7 +145,8 @@ function UserOrders(props) {
                     </div> : <div className="row"><div className="col-2"></div><div className="col-8"><img src="https://cdn.dribbble.com/users/357929/screenshots/2276751/orderup-emptystate-sadbag.png" alt="no orders" className="img-fluid" /><div className="col-2"></div></div></div>}
                 </div>
             )
-        else {
+        else
+        {
             return <div className="container">
                 <div className="row">
                     <Loading />
@@ -151,7 +154,8 @@ function UserOrders(props) {
             </div>
         }
     }
-    else {
+    else
+    {
         return <Redirect to="/home" />
     }
 

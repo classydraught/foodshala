@@ -49,7 +49,8 @@ function RenderRestaraunt({ rest, addTofav, user }) {
         setExpanded(!expanded);
     };
     const favlist = []
-    if (user.LoggedIn && user.UserData.accountType === "User") {
+    if (user.LoggedIn && user.UserData.accountType === "User")
+    {
         user.UserData.favourites.map(item => favlist.push(item._id));
         console.log(favlist)
     }
@@ -109,7 +110,8 @@ const RestarauntsList = (props) => {
             </div>
         );
     });
-    if (props.restaraunts.isLoading) {
+    if (props.restaraunts.isLoading)
+    {
         return (<div className="container" style={{ height: "50vh" }}>
             <div className="row">
                 <div className="col-md-4 col-12">
@@ -122,7 +124,8 @@ const RestarauntsList = (props) => {
             </div>
         </div>)
     }
-    else if (props.restaraunts.errMess) {
+    else if (props.restaraunts.errMess)
+    {
         return (
             <div className="container">
                 <div className="row" style={{ height: "50vh" }}>
@@ -131,7 +134,8 @@ const RestarauntsList = (props) => {
             </div>
         );
     }
-    else {
+    else
+    {
         return (
             <div className="container mb-5">
                 <div className="row">

@@ -36,7 +36,8 @@ class RegisterUser extends Component {
     }
     handleSubmit(values) {
         let form_data = new FormData();
-        if (values.profileImage[0].type === "image/jpeg" || values.profileImage[0].type === "image/png" || values.profileImage[0].type === "image/jpg") {
+        if (values.profileImage[0].type === "image/jpeg" || values.profileImage[0].type === "image/png" || values.profileImage[0].type === "image/jpg")
+        {
             this.toggleModal();
             form_data.append(
                 "profileImage",
@@ -57,10 +58,12 @@ class RegisterUser extends Component {
                 })
                 .then(
                     response => {
-                        if (response.status === 201) {
+                        if (response.status === 201)
+                        {
                             this.toggleModal();
                             alert("User created");
-                        } else {
+                        } else
+                        {
                             var error = new Error(
                                 "Error " + response.status + ": " + response.statusText
                             );
@@ -75,7 +78,8 @@ class RegisterUser extends Component {
                 .catch(err => alert("User not created check email ID or phone" + err));
             this.props.resetUserDetails();
         }
-        else {
+        else
+        {
             alert("Please select JPEG/PNG file only");
         }
     }

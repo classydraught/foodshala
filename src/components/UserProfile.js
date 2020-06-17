@@ -60,7 +60,8 @@ function RenderCard({ item }) {
 
 
 function Profile(props) {
-    if (props.user.isLoading) {
+    if (props.user.isLoading)
+    {
         return (<div className="container" style={{ height: "50vh" }}>
             <div className="row">
                 <div className="col-md-4 col-12">
@@ -73,7 +74,8 @@ function Profile(props) {
             </div>
         </div>)
     }
-    else if (localStorage.getItem("foodshalakey")) {
+    else if (localStorage.getItem("foodshalakey"))
+    {
         return (
             <div className="container">
                 <Breadcrumb>
@@ -108,9 +110,9 @@ function Profile(props) {
                                     <p className="text-center mt-3">
                                         <span role="img" aria-label="victory">
                                             &nbsp;😋
-                    </span>
-                    foodie
-                  </p>
+                                         </span>
+                                          foodie
+                                    </p>
                                     <div className="mt-3 text-center">
                                         <i className="fa fa-2x fa-facebook m-2"></i>
                                         <i className="fa fa-2x fa-instagram m-2"></i>
@@ -134,7 +136,8 @@ function Profile(props) {
 
         );
     }
-    else {
+    else
+    {
         return <Redirect to="/home" />
     }
 

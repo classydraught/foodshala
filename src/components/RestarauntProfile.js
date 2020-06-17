@@ -80,7 +80,8 @@ function ItemCard({ item }) {
     );
 }
 function RestarauntProfile(props) {
-    if (props.user.isLoading) {
+    if (props.user.isLoading)
+    {
         return (<div className="container" style={{ height: "50vh" }}>
             <div className="row">
                 <div className="col-md-4 col-12">
@@ -93,9 +94,11 @@ function RestarauntProfile(props) {
             </div>
         </div>)
     }
-    else if (localStorage.getItem("foodshalareskey")) {
+    else if (localStorage.getItem("foodshalareskey"))
+    {
         var disheslength, ordersLength;
-        if (props.user.LoggedIn) {
+        if (props.user.LoggedIn)
+        {
             disheslength = props.user.UserData.dishes.length;
             ordersLength = props.user.UserData.resorders.length;
         }
@@ -162,7 +165,8 @@ function RestarauntProfile(props) {
             </div >
         );
     }
-    else {
+    else
+    {
         return <Redirect to="/home" />
     }
 

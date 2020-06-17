@@ -26,7 +26,8 @@ function AddDish(props) {
     function handleSubmit(values, resetDishDetails, addNewDish) {
 
         let form_data = new FormData();
-        if (values.dishImage[0].type === "image/jpeg" || values.dishImage[0].type === "image/png" || values.dishImage[0].type === "image/jpg") {
+        if (values.dishImage[0].type === "image/jpeg" || values.dishImage[0].type === "image/png" || values.dishImage[0].type === "image/jpg")
+        {
             toggleModal(!isModalOpen);
             form_data.append(
                 "dishImage",
@@ -48,10 +49,12 @@ function AddDish(props) {
                 })
                 .then(
                     response => {
-                        if (response.status === 201) {
+                        if (response.status === 201)
+                        {
                             alert("Dish Created");
                             addNewDish(response.data.result);
-                        } else {
+                        } else
+                        {
                             var error = new Error(
                                 "Error " + response.status + ": " + response.statusText
                             );
@@ -69,12 +72,14 @@ function AddDish(props) {
                 );
             resetDishDetails();
         }
-        else {
+        else
+        {
             alert("Please select only Jpeg/png file only");
         }
 
     }
-    if (props.user.isLoading) {
+    if (props.user.isLoading)
+    {
         return (
             <div className="container" style={{ height: "50vh" }}>
                 <div className="row">
@@ -218,7 +223,8 @@ function AddDish(props) {
                 </div>
             </div>
         </div>)
-    else {
+    else
+    {
         return (<div>
             <Redirect to="/home" />
         </div>)

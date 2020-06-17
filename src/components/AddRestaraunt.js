@@ -38,7 +38,8 @@ class AddRestaraunt extends Component {
     }
     handleSubmit(values) {
         let form_data = new FormData();
-        if (values.resImage[0].type === "image/jpeg" || values.resImage[0].type === "image/png" || values.resImage[0].type === "image/jpg") {
+        if (values.resImage[0].type === "image/jpeg" || values.resImage[0].type === "image/png" || values.resImage[0].type === "image/jpg")
+        {
             this.toggleModal();
             form_data.append(
                 "resImage",
@@ -62,10 +63,12 @@ class AddRestaraunt extends Component {
                 })
                 .then(
                     response => {
-                        if (response.status === 201) {
+                        if (response.status === 201)
+                        {
                             alert("Restaraunt created");
                             this.props.addNewRestaraunt(response.data);
-                        } else {
+                        } else
+                        {
                             var error = new Error(
                                 "Error " + response.status + ": " + response.statusText
                             );
@@ -83,7 +86,8 @@ class AddRestaraunt extends Component {
                 );
             this.props.resetRestarauntDetails();
         }
-        else {
+        else
+        {
             alert("Please select only jpeg/png file only");
         }
     }

@@ -20,7 +20,8 @@ class RestarauntLogin extends Component {
     }
 
     render() {
-        if (!this.props.user.LoggedIn) {
+        if (!this.props.user.LoggedIn)
+        {
             return (
                 <div style={{ backgroundColor: "#f56c3a" }}>
                     <div className="container">
@@ -77,7 +78,8 @@ class RestarauntLogin extends Component {
                 </div>
             )
         }
-        else {
+        else
+        {
             return <Redirect to="/resprofile" />
         }
     }

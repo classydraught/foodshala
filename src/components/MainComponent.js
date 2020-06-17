@@ -85,10 +85,12 @@ class Main extends Component {
     componentDidMount() {
         this.props.fetchDishes();
         this.props.fetchRestraunts();
-        if (localStorage.getItem("foodshalakey") && !this.props.user.LoggedIn) {
+        if (localStorage.getItem("foodshalakey") && !this.props.user.LoggedIn)
+        {
             this.props.alreadyLoggedin();
         }
-        if (localStorage.getItem("foodshalareskey") && !this.props.user.LoggedIn) {
+        if (localStorage.getItem("foodshalareskey") && !this.props.user.LoggedIn)
+        {
             this.props.alreadyLoggedinRes();
         }
     }
