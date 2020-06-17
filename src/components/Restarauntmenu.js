@@ -20,7 +20,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Loading, OrderLoading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
-import { useAlert } from 'react-alert'
+import { useAlert } from 'react-alert';
+import { Prompt } from 'react-router'
 
 
 
@@ -73,25 +74,28 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
     function ItemCard({ item, user }) {
         const classes = useStyles();
         return (
-            <Card className={classes.root}>
-                <div className={classes.details}>
-                    <CardContent className={classes.content}>
-                        <Typography component="h6" variant="h6" style={{ fontFamily: "Montserrat" }}>
-                            {item.name}
-                        </Typography>
-                        {item.featured ? <span class="badge badge-pill badge-warning mr-3">Must try</span> : <span></span>}{item.vegan ? <span class="badge badge-pill badge-success">100% veg</span> : <span></span>}
-                    </CardContent>
-                    <div>
-                        <p className="ml-3 p-0 mb-0">{item.price} /-</p>
-                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { alert.show('Login as user to purchase') }}>Buy</button>}
-                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => { addDishlocal(usrdishes.concat(item)); alert.success('Added to cart') }}><i className="fa fa-shopping-basket"></i></button> : <button type="button" className="btn btn-outline-dark" onClick={() => { alert.show('Login as user to add to cart') }}><i className="fa fa-shopping-basket"></i></button>}
+            <>
+                <Prompt message='You have some items in the cart. Moving out will discard items the cart.' when={usrdishes.length !== 0} />
+                <Card className={classes.root}>
+                    <div className={classes.details}>
+                        <CardContent className={classes.content}>
+                            <Typography component="h6" variant="h6" style={{ fontFamily: "Montserrat" }}>
+                                {item.name}
+                            </Typography>
+                            {item.featured ? <span class="badge badge-pill badge-warning mr-3">Must try</span> : <span></span>}{item.vegan ? <span class="badge badge-pill badge-success">100% veg</span> : <span></span>}
+                        </CardContent>
+                        <div>
+                            <p className="ml-3 p-0 mb-0">{item.price} /-</p>
+                            {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { alert.show('Login as user to purchase') }}>Buy</button>}
+                            {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => { addDishlocal(usrdishes.concat(item)); alert.success('Added to cart') }}><i className="fa fa-shopping-basket"></i></button> : <button type="button" className="btn btn-outline-dark" onClick={() => { alert.show('Login as user to add to cart') }}><i className="fa fa-shopping-basket"></i></button>}
+                        </div>
                     </div>
-                </div>
-                <CardMedia
-                    className={classes.cover}
-                    image={baseUrl + item.image}
-                />
-            </Card>
+                    <CardMedia
+                        className={classes.cover}
+                        image={baseUrl + item.image}
+                    />
+                </Card>
+            </>
         );
     }
     var [isModalOpen, toggleModal] = useState(false);
