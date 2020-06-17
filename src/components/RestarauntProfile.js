@@ -151,12 +151,15 @@ function RestarauntProfile(props) {
                     <div className="col-12 col-md-8 my-3 ">
                         <h3 className="text-center">Menu</h3>
                         <Divider className="mb-3" />
-                        <div className="row">
+                        <div className="row d-block">
                             <Menu dishes={props.user.UserData.dishes} LoggedIn={props.user.LoggedIn} />
+                            <p className="text-center">
+                                <Link to="/adddish"><button type="button" className="btn btn-outline-dark ml-3" > <i className="fa fa-plus-circle"></i>Add dish</button></Link>
+                            </p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
     else {

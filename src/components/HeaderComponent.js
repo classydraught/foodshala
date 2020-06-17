@@ -83,18 +83,7 @@ class Header extends Component {
         return (
             <>
                 <div>
-                    <Modal isOpen={this.props.user.isLoading} >
-                        <ModalBody>
-                            <div className="container h-100">
-                                <div className="row d-block text-center">
-                                    <h3 className="mt-5" style={{ fontFamily: "Montserrat" }}>User logging in</h3>
-                                    <div className="col-12" style={{ marginLeft: "35%", marginTop: "20%", marginBottom: "30%" }}>
-                                        <OrderLoading />
-                                    </div>
-                                </div>
-                            </div>
-                        </ModalBody>
-                    </Modal>
+
                     <Navbar dark expand="md" className="fixed-top">
                         <div className="container">
                             <NavbarToggler onClick={this.toggleNav} />
@@ -250,6 +239,18 @@ class Header extends Component {
                         </div>
                     </div>
                 </Jumbotron>
+                <Modal isOpen={this.props.user.isLoading}>
+                    <ModalBody>
+                        <div className="container">
+                            <div className="row text-center d-block">
+                                <h3 className="mt-5" style={{ fontFamily: "Montserrat" }}>User logging in</h3>
+                                <div className="col-12" style={{ marginLeft: "35%", marginTop: "20%", marginBottom: "30%" }}>
+                                    <OrderLoading />
+                                </div>
+                            </div>
+                        </div>
+                    </ModalBody>
+                </Modal>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
                     <ModalHeader toggle={this.toggleModal} className="login-modal">Login</ModalHeader>
                     <ModalBody>

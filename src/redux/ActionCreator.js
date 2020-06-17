@@ -49,6 +49,7 @@ export const loginUser = (email, password) => dispatch => {
             );
         })
         .catch(error => {
+            dispatch(FailedUserLogin());
             alert("Wrong Credentials/ Kindly check email or password");
         });
 };
@@ -183,6 +184,7 @@ export const resLogin = (email, password) => dispatch => {
             );
         })
         .catch(error => {
+            dispatch(FailedUserLogin())
             alert("Wrong Credentials/ Kindly check email or password");
         });
 };

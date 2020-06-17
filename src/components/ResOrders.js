@@ -58,7 +58,7 @@ function RenderCard({ item }) {
                 exitTransform: "scale(0.2) translateY(-20%)",
             }}
         >
-            <Card className="profile-coursecard">
+            <Card className="profile-coursecard mb-3">
                 <CardHeader
                     avatar={
                         <Avatar

@@ -157,4 +157,16 @@ address {
 .login-modal {
   background: #363636;
   color: #eee;
+  overflow: hidden;
+}
+.modal {
+  overflow-y: auto;
+}
+
+.modal-open {
+  overflow: auto;
+}
+
+.modal-open[style] {
+  padding-right: 0px !important;
 }
