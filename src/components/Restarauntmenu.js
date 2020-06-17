@@ -20,6 +20,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Loading, OrderLoading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
+import { useAlert } from 'react-alert'
 
 
 
@@ -67,6 +68,7 @@ function RenderRest({ restaraunt }) {
 }
 
 const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
+    const alert = useAlert();
     var [usrdishes, addDishlocal] = useState([]);
     function ItemCard({ item, user }) {
         const classes = useStyles();
@@ -82,7 +84,7 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
                     <div>
                         <p className="ml-3 p-0 mb-0">{item.price} /-</p>
                         {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark m-3 mt-0" onClick={() => { addDishlocal(usrdishes.concat(item)); toggleModal(!isModalOpen) }}>Buy</button> : <span></span>}
-                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => addDishlocal(usrdishes.concat(item))}><i className="fa fa-shopping-basket"></i></button> : <span></span>}
+                        {(user.LoggedIn && user.UserData.accountType === "User") ? <button type="button" className="btn btn-outline-dark" onClick={() => { addDishlocal(usrdishes.concat(item)); alert.show('Added to cart') }}><i className="fa fa-shopping-basket"></i></button> : <span></span>}
                     </div>
                 </div>
                 <CardMedia
