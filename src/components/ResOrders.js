@@ -139,7 +139,7 @@ function Orders(props) {
 
             return (
                 <div className="container my-5">
-                    <div className="row">
+                    {props.user.UserData.resorders.length !== 0 ? <div className="row">
                         {
                             props.user.UserData.resorders.map(order =>
                                 <div className="col-md-4 col-12">
@@ -149,7 +149,7 @@ function Orders(props) {
                                 </div>
                             )
                         }
-                    </div>
+                    </div> : <div className="row"><div className="col-2"></div><div className="col-8"><img src="https://cdn.dribbble.com/users/721524/screenshots/4112199/no_orders.png" alt="no orders" className="img-fluid" /><div className="col-2"></div></div></div>}
                 </div>
             )
         else {
