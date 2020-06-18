@@ -5,9 +5,9 @@
 /.pnp
 .pnp.js
 /foodshalastatic
+/public/assets
 # testing
 /coverage
-
 # production
 /build
 

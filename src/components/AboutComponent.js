@@ -56,9 +56,9 @@ function About(props) {
                                 <dt className="col-6">Major Stake Holder</dt>
                                 <dd className="col-6">Internshala</dd>
                                 <dt className="col-6">Orders served till now</dt>
-                                <dd className="col-6">100</dd>
+                                <dd className="col-6">10 million</dd>
                                 <dt className="col-6">Total customers</dt>
-                                <dd className="col-6">30</dd>
+                                <dd className="col-6">3 million</dd>
                             </dl>
                         </CardBody>
                     </Card>
