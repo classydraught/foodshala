@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function RenderRest({ restaraunt, addReview, reviews, reviewerrMess, reviewsLoading }) {
+function RenderRest({ restaraunt, addReview, reviews, reviewerrMess, reviewsLoading, user }) {
     var [userrating, setUserRating] = useState(0);
     var [isReviewOpen, toggleReviewModal] = useState(false);
     let totalRating = 0;
@@ -147,11 +147,10 @@ function RenderRest({ restaraunt, addReview, reviews, reviewerrMess, reviewsLoad
                     </CardBody>
                 </div>
             </FadeTransform>
-            <Button variant="outlined" onClick={() => toggleReviewModal(!isReviewOpen)} size="small" outline className="mb-5">
+            {(user.LoggedIn && user.UserData.accountType === "User") ? <Button variant="outlined" onClick={() => toggleReviewModal(!isReviewOpen)} size="small" outline className="mb-5">
                 <RateReviewIcon />
               &nbsp;&nbsp;Add review
-              </Button>
-
+              </Button> : <span></span>}
         </div>
     );
 }
@@ -307,7 +306,7 @@ const RestarauntDetail = props => {
                 </div>
                 <div className="row">
                     <RenderRest restaraunt={props.restaraunt} addReview={props.addReview} reviews={props.reviews} reviewerrMess={props.reviewerrMess}
-                        reviewsLoading={props.reviewsLoading} />
+                        reviewsLoading={props.reviewsLoading} user={props.user} />
                     <Menu dishes={props.dishes} user={props.user} addtoCart={props.addtoCart} resID={props.restaraunt._id} placeOrder={props.placeOrder} />
                 </div>
             </div>
