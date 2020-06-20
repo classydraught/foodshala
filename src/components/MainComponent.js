@@ -17,7 +17,22 @@ import UserOrders from "./UserOrders";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import { loginUser, LogOutUser, alreadyLoggedin, resLogin, alreadyLoggedinRes, fetchRestraunts, fetchDishes, addNewRestaraunt, addNewDish, addtoCart, placeOrder, addTofav } from "../redux/ActionCreator";
+import {
+    loginUser,
+    LogOutUser,
+    alreadyLoggedin,
+    resLogin,
+    alreadyLoggedinRes,
+    fetchRestraunts,
+    fetchDishes,
+    addNewRestaraunt,
+    addNewDish,
+    addtoCart,
+    placeOrder,
+    addTofav,
+    fetchReviews,
+    addReview
+} from "../redux/ActionCreator";
 import { actions } from "react-redux-form";
 
 
@@ -27,7 +42,8 @@ const mapStateToProps = state => {
         user: state.user,
         dishes: state.dishes,
         restaraunts: state.restaraunts,
-        cart: state.cart
+        cart: state.cart,
+        reviews: state.reviews
     };
 };
 
@@ -65,8 +81,14 @@ const mapDispatchToProps = dispatch => ({
     addTofav: (resId) => {
         dispatch(addTofav(resId))
     },
+    fetchReviews: () => {
+        dispatch(fetchReviews())
+    },
     resetUserDetails: () => {
         dispatch(actions.reset("registeruser"));
+    },
+    addReview: (value, comment, resId) => {
+        dispatch(addReview(value, comment, resId))
     },
     resetRestarauntDetails: () => {
         dispatch(actions.reset("registerres"));
@@ -85,6 +107,7 @@ class Main extends Component {
     componentDidMount() {
         this.props.fetchDishes();
         this.props.fetchRestraunts();
+        this.props.fetchReviews();
         if (localStorage.getItem("foodshalakey") && !this.props.user.LoggedIn)
         {
             this.props.alreadyLoggedin();
@@ -105,14 +128,20 @@ class Main extends Component {
                             restaraunt => restaraunt._id === match.params.resId
                         )[0]
                     }
+                    addReview={this.props.addReview}
                     addtoCart={this.props.addtoCart}
                     isLoading={this.props.restaraunts.isLoading}
                     errMess={this.props.restaraunts.errMess}
                     dishes={this.props.dishes.dishes.filter(
                         dish => dish.resId === match.params.resId
                     )}
+                    reviews={this.props.reviews.reviews.filter(
+                        review => review.resId === match.params.resId
+                    )}
                     disheserrMess={this.props.dishes.errMess}
                     placeOrder={this.props.placeOrder}
+                    reviewerrMess={this.props.reviews.errMess}
+                    reviewsLoading={this.props.reviews.isLoading}
                 />
             );
         };

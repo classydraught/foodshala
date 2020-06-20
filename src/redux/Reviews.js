@@ -1,34 +1,37 @@
 import * as actionTypes from "./ActionTypes";
-export const Dish = (
+export const Review = (
     state = {
         isLoading: true,
         errMess: null,
-        dishes: []
+        reviews: []
     },
     action
 ) => {
     switch (action.type)
     {
-        case actionTypes.ADD_DISHES:
+        case actionTypes.ADD_REVIEWS:
             return {
                 ...state,
                 isLoading: false,
                 errMess: null,
-                dishes: action.payload
+                reviews: action.payload
             };
 
-        case actionTypes.DISHES_LOADING:
-            return { ...state, isLoading: true, errMess: null, dishes: [] };
-        case actionTypes.ADD_NEW_DISH:
-            return { ...state, dishes: state.dishes.concat(action.payload) };
+        case actionTypes.REVIEWS_LOADING:
+            return { ...state, isLoading: true, errMess: null, reviews: [] };
 
-        case actionTypes.DISHES_FAILED:
+        case actionTypes.REVIEWS_FAILED:
             return {
                 ...state,
                 isLoading: false,
                 errMess: action.payload,
-                dishes: []
+                reviews: []
             };
+        case actionTypes.ADD_USER_REVIEW:
+            return {
+                ...state,
+                reviews: state.reviews.concat(action.payload)
+            }
         default:
             return state;
     }

@@ -15,3 +15,7 @@ export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const CLEAR_CART = "CLEAR_CART";
 export const ADD_ORDER_USER = "ADD_ORDER_USER";
 export const ADD_TO_FAV = "ADD_TO_FAV";
+export const ADD_REVIEWS = "ADD_REVIEWS";
+export const REVIEWS_LOADING = "REVIEWS_LOADING";
+export const REVIEWS_FAILED = "REVIEWS_FAILED";
+export const ADD_USER_REVIEW = "ADD_USER_REVIEW";

@@ -7,7 +7,8 @@ export const Restaraunt = (
     },
     action
 ) => {
-    switch (action.type) {
+    switch (action.type)
+    {
         case actionTypes.ADD_RESTARAUNTS:
             return {
                 ...state,

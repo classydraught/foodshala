@@ -17,9 +17,11 @@ export const loginUser = (email, password) => dispatch => {
     })
         .then(
             response => {
-                if (response.ok) {
+                if (response.ok)
+                {
                     return response;
-                } else {
+                } else
+                {
                     var error = new Error(
                         "Error " + response.status + ": " + response.statusText
                     );
@@ -90,9 +92,11 @@ export const alreadyLoggedin = () => dispatch => {
         credentials: "same-origin"
     })
         .then(response => {
-            if (response.ok) {
+            if (response.ok)
+            {
                 return response;
-            } else {
+            } else
+            {
                 var error = new Error(
                     "Error " + response.status + ": " + response.statusText
                 );
@@ -150,9 +154,11 @@ export const resLogin = (email, password) => dispatch => {
     })
         .then(
             response => {
-                if (response.ok) {
+                if (response.ok)
+                {
                     return response;
-                } else {
+                } else
+                {
                     var error = new Error(
                         "Error " + response.status + ": " + response.statusText
                     );
@@ -201,9 +207,11 @@ export const alreadyLoggedinRes = () => dispatch => {
         credentials: "same-origin"
     })
         .then(response => {
-            if (response.ok) {
+            if (response.ok)
+            {
                 return response;
-            } else {
+            } else
+            {
                 var error = new Error(
                     "Error " + response.status + ": " + response.statusText
                 );
@@ -261,9 +269,11 @@ export const fetchRestraunts = () => dispatch => {
     return fetch(baseUrl + "restaraunt/getallres")
         .then(
             response => {
-                if (response.ok) {
+                if (response.ok)
+                {
                     return response;
-                } else {
+                } else
+                {
                     let error = new Error(
                         "Error " + response.status + ": " + response.statusText
                     );
@@ -309,9 +319,11 @@ export const fetchDishes = () => dispatch => {
     return fetch(baseUrl + "dishes/getall")
         .then(
             response => {
-                if (response.ok) {
+                if (response.ok)
+                {
                     return response;
-                } else {
+                } else
+                {
                     let error = new Error(
                         "Error " + response.status + ": " + response.statusText
                     );
@@ -361,7 +373,8 @@ export const addDishtoCart = (localCart) => ({
 
 export const placeOrder = (dishes) => dispatch => {
     var dishOrdered = [];
-    for (const x of dishes) {
+    for (const x of dishes)
+    {
         dishOrdered.push(x._id);
     }
     const order = {
@@ -378,11 +391,13 @@ export const placeOrder = (dishes) => dispatch => {
         credentials: "same-origin"
     })
         .then(response => {
-            if (response.status === 200) {
+            if (response.status === 200)
+            {
                 alert("Order placed");
                 return response.json();
             }
-            else {
+            else
+            {
                 alert("Order not placed")
             }
         })
@@ -409,10 +424,12 @@ export const addTofav = (resID) => dispatch => {
         credentials: "same-origin"
     })
         .then(response => {
-            if (response.status === 200) {
+            if (response.status === 200)
+            {
                 return response.json();
             }
-            else if (response.status === 409) {
+            else if (response.status === 409)
+            {
                 return response.json();
             }
         })
@@ -423,4 +440,85 @@ export const addTofav = (resID) => dispatch => {
 export const addFavtoState = (fav) => ({
     type: actionTypes.ADD_TO_FAV,
     payload: fav
+})
+
+
+export const fetchReviews = () => dispatch => {
+    dispatch(ReviewsLoading(true));
+    return fetch(baseUrl + "reviews/reviewsgetall")
+        .then(
+            response => {
+                if (response.ok)
+                {
+                    return response;
+                } else
+                {
+                    let error = new Error(
+                        "Error " + response.status + ": " + response.statusText
+                    );
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errormsg = new Error(error.message);
+                throw errormsg;
+            }
+        )
+        .then(response => response.json())
+        .then(reviews => dispatch(addReviews(reviews)))
+        .catch(error => dispatch(ReviewsFailed(error.message)));
+}
+
+export const addReviews = (reviews) => ({
+    type: actionTypes.ADD_REVIEWS,
+    payload: reviews
+})
+
+export const ReviewsLoading = () => ({
+    type: actionTypes.REVIEWS_LOADING
+});
+
+export const ReviewsFailed = errormsg => ({
+    type: actionTypes.REVIEWS_FAILED,
+    payload: errormsg
+});
+
+
+
+export const addReview = (value, comment, resId) => (dispatch) => {
+    const review = {
+        value: value,
+        comment: comment,
+        resId: resId,
+        date: new Date().toISOString()
+    }
+
+    return fetch(baseUrl + "reviews/createreview", {
+        method: "POST",
+        body: JSON.stringify(review),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("foodshalakey")
+        },
+        credentials: "same-origin"
+    })
+        .then(response => {
+            if (response.status === 201)
+            {
+                alert("Review added");
+                return response.json();
+            }
+            else
+            {
+                alert("Review not added")
+            }
+        })
+        .then(res => dispatch(addReviewtoState(res)))
+        .catch(err => alert("Review not added"));
+}
+
+export const addReviewtoState = (review) => ({
+    type: actionTypes.ADD_USER_REVIEW,
+    payload: review
 })

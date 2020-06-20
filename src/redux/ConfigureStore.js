@@ -5,6 +5,7 @@ import { User } from "./User";
 import { Restaraunt } from "./Restaraunt";
 import { Dish } from "./Dishes";
 import { Cart } from "./Cart";
+import { Review } from "./Reviews";
 import { createForms } from "react-redux-form";
 import { InitialFeedback, RegisterUserDetails, RegisterRestarauntDetails, addDishDetails } from "./forms";
 
@@ -15,6 +16,7 @@ export const storeConfig = () => {
             user: User,
             restaraunts: Restaraunt,
             dishes: Dish,
+            reviews: Review,
             cart: Cart,
             ...createForms({ feedback: InitialFeedback }),
             ...createForms({ registeruser: RegisterUserDetails }),

@@ -8,7 +8,10 @@ import {
     BreadcrumbItem,
     Modal,
     ModalBody,
-    ModalHeader
+    ModalHeader,
+    Button,
+    Label,
+    Row
 } from "reactstrap";
 import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
@@ -21,7 +24,14 @@ import Typography from '@material-ui/core/Typography';
 import { Loading, OrderLoading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
 import { useAlert } from 'react-alert';
-import { Prompt } from 'react-router'
+import { Prompt } from 'react-router';
+import { LocalForm, Control, Errors } from "react-redux-form";
+import RateReviewIcon from "@material-ui/icons/RateReview";
+import CancelScheduleSendIcon from '@material-ui/icons/CancelScheduleSend';
+const required = value => value && value.length;
+const maxLength = length => value => !value || value.length <= length;
+const minLength = length => value => value && value.length >= length;
+
 
 
 
@@ -41,9 +51,82 @@ const useStyles = makeStyles(() => ({
         marginLeft: "auto"
     },
 }));
-function RenderRest({ restaraunt }) {
+
+function RenderRest({ restaraunt, addReview, reviews, reviewerrMess, reviewsLoading }) {
+    var [userrating, setUserRating] = useState(0);
+    var [isReviewOpen, toggleReviewModal] = useState(false);
+    let totalRating = 0;
+    if (reviews.length !== 0)
+        for (const x of reviews) totalRating += x.value
+    totalRating = totalRating / reviews.length;
+    function handleComment(values) {
+        toggleReviewModal(!isReviewOpen);
+        addReview(userrating, values.comment, restaraunt._id);
+        setUserRating(userrating = 0);
+    }
+    function handleInputChange(event) {
+        const target = event.target;
+        const value = target.value;
+        setUserRating(userrating = value);
+        console.log(userrating);
+    }
     return (
         <div className="col-12 col-md-5 mr-md-5 mr-0 ">
+            <Modal isOpen={isReviewOpen} toggle={() => toggleReviewModal(!isReviewOpen)} >
+                <ModalBody>
+                    <div className="container h-100">
+                        <div className="row d-block text-center">
+                            <h3 className="mt-5" style={{ fontFamily: "Montserrat" }}>Add Review</h3>
+                            <div className="col-12 mt-5" >
+                                <LocalForm className="container d-block" onSubmit={(values) => handleComment(values)} >
+                                    <Row className="form-group">
+                                        <Label htmlFor="userrating">Rating : </Label>
+                                        <Rating
+                                            className="ml-3"
+                                            name="customized-empty"
+                                            defaultValue={userrating}
+                                            onChange={(event) => handleInputChange(event)}
+                                        />
+                                    </Row>
+
+                                    <Row className="form-group">
+                                        <Label htmlFor="comment">Comment</Label>
+                                        <Control.textarea
+                                            rows={3}
+                                            model=".comment"
+                                            className="form-control"
+                                            id="comment"
+                                            name="comment"
+                                            placeholder="Your comment"
+                                            validators={{
+                                                required,
+                                                minLength: minLength(4),
+                                                maxLength: maxLength(70)
+                                            }}
+                                        />
+                                        <Errors
+                                            className="text-danger"
+                                            model=".comment"
+                                            show="touched"
+                                            messages={{
+                                                required: "Required ",
+                                                minLength: "Must be greater than 4 characters "
+                                            }}
+                                        />
+                                    </Row>
+                                    <Row>
+                                        <Button type="submit" variant="outlined" size="large">
+                                            <i className="fa fa-paper-plane">&nbsp;&nbsp;Post</i>
+                                        </Button>
+                                        <Button className="ml-5" onClick={() => toggleReviewModal(!isReviewOpen)}><CancelScheduleSendIcon />&nbsp;&nbsp;Cancel</Button>
+                                    </Row>
+
+                                </LocalForm>
+                            </div>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
             <FadeTransform
                 in
                 transformProps={{
@@ -56,7 +139,7 @@ function RenderRest({ restaraunt }) {
                         <CardTitle>{restaraunt.resname}</CardTitle>
                         <Rating
                             name="read-only"
-                            value="4.5"
+                            value={totalRating}
                             readOnly
                             precision={0.1}
                         />
@@ -64,6 +147,11 @@ function RenderRest({ restaraunt }) {
                     </CardBody>
                 </div>
             </FadeTransform>
+            <Button variant="outlined" onClick={() => toggleReviewModal(!isReviewOpen)} size="small" outline className="mb-5">
+                <RateReviewIcon />
+              &nbsp;&nbsp;Add review
+              </Button>
+
         </div>
     );
 }
@@ -166,7 +254,8 @@ const Menu = ({ dishes, user, addtoCart, resID, placeOrder }) => {
 }
 
 const RestarauntDetail = props => {
-    if (props.isLoading) {
+    if (props.isLoading)
+    {
         return (
             <div className="container">
                 <div className="row">
@@ -174,7 +263,8 @@ const RestarauntDetail = props => {
                 </div>
             </div>
         );
-    } else if (props.errMess) {
+    } else if (props.errMess)
+    {
         return (
             <div className="container">
                 <div className="row">
@@ -183,7 +273,8 @@ const RestarauntDetail = props => {
             </div>
         );
     }
-    else {
+    else
+    {
         return (
             <div className="container mb-5">
                 <div className="row">
@@ -215,7 +306,8 @@ const RestarauntDetail = props => {
                     </div>
                 </div>
                 <div className="row">
-                    <RenderRest restaraunt={props.restaraunt} />
+                    <RenderRest restaraunt={props.restaraunt} addReview={props.addReview} reviews={props.reviews} reviewerrMess={props.reviewerrMess}
+                        reviewsLoading={props.reviewsLoading} />
                     <Menu dishes={props.dishes} user={props.user} addtoCart={props.addtoCart} resID={props.restaraunt._id} placeOrder={props.placeOrder} />
                 </div>
             </div>
